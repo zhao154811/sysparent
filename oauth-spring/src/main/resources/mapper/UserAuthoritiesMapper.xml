@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enlinkmob.ucenterapi.dao.UserAuthoritiesMapper">
+    <resultMap id="authoritiesResultMap" type="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+        <id column="auth_id" property="id"/>
+        <result column="authority" property="authority"/>
+        <result column="auth_name" property="name"/>
+        <result column="auth_create_time" property="createTime"/>
+        <result column="auth_modify_time" property="modifyTime"/>
+        <result column="auth_status" property="status"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+    </resultMap>
+    <!-- Result Map-->
+    <resultMap id="userResultMap" type="com.enlinkmob.ucenterapi.model.User">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="id_no" property="idNo"/>
+        <result column="phone_num" property="phoneNum"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="birthday" property="birthday"/>
+        <result column="head_icon" property="headIcon"/>
+        <result column="account_status" property="accountStatus"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.AccountStatusHandler"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="status" property="status"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+        <collection property="authorities" ofType="com.enlinkmob.ucenterapi.model.OauthAuthorities"
+                    resultMap="authoritiesResultMap"/>
+    </resultMap>
+    <select id="getUserWithAuthorities" resultType="com.enlinkmob.ucenterapi.model.User" resultMap="userResultMap">
+        SELECT
+        a.id,a.user_name,a.phone_num,a.real_name,a.address,a.`status`,a.birthday,a.id_no,a.create_time,a.modify_time,
+        a.`password`,a.head_icon,a.salt,a.email,a.locked,a.sex,a.account_status,c.id as auth_id,c.authority,c.`name` as
+        auth_name,
+        c.create_time as auth_create_time,c.modify_time as auth_modify_time,c.`status` as auth_status
+        from user a
+        LEFT JOIN user_authorities b
+        on a.id = b.user_id
+        LEFT JOIN oauth_authorities c
+        on c.id = b.authority_id
+        where b.status='ENABLE'
+        and c.status='ENABLE'
+        and a.id=#{userId}
+    </select>
+    <select id="getUserWithAuthoritiesByName" resultType="com.enlinkmob.ucenterapi.model.User"
+            resultMap="userResultMap">
+        SELECT
+        a.id,a.user_name,a.phone_num,a.real_name,a.address,a.`status`,a.birthday,a.id_no,a.create_time,a.modify_time,
+        a.`password`,a.head_icon,a.salt,a.email,a.locked,a.sex,a.account_status,c.id as auth_id,c.authority,c.`name` as
+        auth_name,
+        c.create_time as auth_create_time,c.modify_time as auth_modify_time,c.`status` as auth_status
+        from user a
+        LEFT JOIN user_authorities b
+        on a.id = b.user_id
+        LEFT JOIN oauth_authorities c
+        on c.id = b.authority_id
+        where b.status='ENABLE'
+        and c.status='ENABLE'
+        and a.user_name=#{userName}
+    </select>
+</mapper>

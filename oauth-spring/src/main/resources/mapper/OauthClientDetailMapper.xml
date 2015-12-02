@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthClientDetailMapper">
+    <resultMap id="resultMap" type="com.enlinkmob.ucenterapi.model.OAuthClientDetails">
+        <result column="client_id" property="clientId"/>
+        <result column="resource_ids" property="resourceIds"/>
+        <result column="client_secret" property="clientSecret"/>
+        <result column="scope" property="scope"/>
+        <result column="authorized_grant_types" property="authorizedGrantTypes"/>
+        <result column="web_server_redirect_uri" property="webServerRedirectUri"/>
+        <result column="authorities" property="authorities"/>
+        <result column="access_token_validity" property="accessTokenValidity"/>
+        <result column="refresh_token_validity" property="refreshTokenValidity"/>
+        <result column="additional_information" property="additionalInformation"/>
+        <result column="autoapprove" property="autoapprove"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+    <sql id="columnList">
+    client_id,resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove,create_time,modify_time
+    </sql>
+    <!-- 查询条件 -->
+    <sql id="whereConditions">
+        <where>
+            1=1
+            <if test="resourceIds != null and resourceIds != ''">
+                and resource_ids = #{resourceIds}
+            </if>
+            <if test="clientSecret != null and clientSecret != ''">
+                and client_secret = #{resourceIds}
+            </if>
+            <if test="scope != null and scope != ''">
+                and scope = #{scope}
+            </if>
+            <if test="authorizedGrantTypes != null and authorizedGrantTypes != ''">
+                and authorized_grant_types = #{authorizedGrantTypes}
+            </if>
+            <if test="webServerRedirectUri != null and webServerRedirectUri != ''">
+                and web_server_redirect_uri = #{webServerRedirectUri}
+            </if>
+            <if test="authorities != null and authorities != ''">
+                and authorities = #{authorities}
+            </if>
+            <if test="accessTokenValidity != null">
+                and access_token_validity = #{accessTokenValidity}
+            </if>
+            <if test="refreshTokenValidity != null">
+                and refresh_token_validity = #{refreshTokenValidity}
+            </if>
+            <if test="additionalInformation != null and additionalInformation != ''">
+                and additional_information = #{additionalInformation}
+            </if>
+            <if test="autoapprove != null and autoapprove != ''">
+                and autoapprove = #{autoapprove}
+            </if>
+            <if test="createTime != null ">
+                and create_time = #{createTime}
+            </if>
+            <if test="modifyTime != null ">
+                and modify_time = #{modifyTime}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="updatesql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resourceIds != null and resourceIds != ''">
+                resource_ids = #{resourceIds},
+            </if>
+            <if test="clientSecret != null and clientSecret != ''">
+                client_secret = #{resourceIds},
+            </if>
+            <if test="scope != null and scope != ''">
+                scope = #{scope},
+            </if>
+            <if test="authorizedGrantTypes != null and authorizedGrantTypes != ''">
+                authorized_grant_types = #{authorizedGrantTypes},
+            </if>
+            <if test="webServerRedirectUri != null and webServerRedirectUri != ''">
+                web_server_redirect_uri = #{webServerRedirectUri},
+            </if>
+            <if test="authorities != null and authorities != ''">
+                authorities = #{authorities},
+            </if>
+            <if test="accessTokenValidity != null">
+                access_token_validity = #{accessTokenValidity},
+            </if>
+            <if test="refreshTokenValidity != null">
+                refresh_token_validity = #{refreshTokenValidity},
+            </if>
+            <if test="additionalInformation != null and additionalInformation != ''">
+                additional_information = #{additionalInformation},
+            </if>
+            <if test="autoapprove != null and autoapprove != ''">
+                autoapprove = #{autoapprove},
+            </if>
+            <if test="createTime != null ">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null ">
+                modify_time = #{modifyTime}
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="addClientDetail">
+        INSERT into oauth_client_details(client_id,resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove,create_time,modify_time)
+        VALUES (#{clientId},#{resourceIds},#{clientSecret},#{scope},#{authorizedGrantTypes},#{webServerRedirectUri},#{authorities},#{accessTokenValidity},#{refreshTokenValidity},#{additionalInformation},#{autoapprove},#{createTime},#{modifyTime})
+    </insert>
+    <update id="updateClientDetail">
+        UPDATE oauth_client_details
+        <include refid="updatesql"/>
+        WHERE client_id =#{clientId}
+    </update>
+    <update id="updateClientDetailByClientId">
+        UPDATE oauth_client_details
+        <include refid="updatesql"/>
+        WHERE client_id =#{clientId}
+    </update>
+    <delete id="deleteClientDetail">
+        DELETE from oauth_client_details where client_id =#{clientId}
+    </delete>
+    <select id="getByClientId" resultType="com.enlinkmob.ucenterapi.model.OAuthClientDetails" resultMap="resultMap">
+        SELECT
+        <include refid="columnList"/>
+        from oauth_client_details
+        WHERE client_id = #{clientId} limit 1
+    </select>
+    <select id="ifexist" resultType="java.lang.Integer">
+        SELECT COUNT(1) from  oauth_client_details WHERE client_id = #{clientId}
+    </select>
+    <select id="getClientListByClientId" resultMap="resultMap"
+            resultType="com.enlinkmob.ucenterapi.model.OAuthClientDetails">
+        SELECT
+        <include refid="columnList"/>
+        FROM oauth_client_details WHERE client_id = #{clientId}
+    </select>
+
+</mapper>

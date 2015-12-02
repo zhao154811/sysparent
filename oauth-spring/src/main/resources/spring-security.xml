@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+	 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+
+    <bean id="tokenStore"
+          class="com.enlinkmob.ucenterapi.service.MongoTokenStore">
+    </bean>
+    <bean id="tokenServices" class="com.enlinkmob.ucenterapi.service.MyTokenService">
+        <!--class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"-->
+        <property name="tokenStore" ref="tokenStore"/>
+        <property name="clientDetailsService" ref="clientDetailsService"/>
+        <property name="supportRefreshToken" value="true"/>
+    </bean>
+
+    <bean id="clientDetailsService"
+          class="com.enlinkmob.ucenterapi.service.MongoClientDetailService">
+    </bean>
+    <bean id="oauth2ClientDetailsUserService"
+          class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+        <constructor-arg ref="clientDetailsService"/>
+    </bean>
+
+    <bean id="oauth2AuthenticationEntryPoint"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"/>
+
+    <sec:authentication-manager id="oauth2AuthenticationManager">
+        <sec:authentication-provider user-service-ref="oauth2ClientDetailsUserService"/>
+    </sec:authentication-manager>
+
+
+    <bean id="oauth2AccessDeniedHandler"
+          class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>
+
+    <bean id="oAuth2RequestFactory"
+          class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
+        <constructor-arg ref="clientDetailsService"/>
+    </bean>
+
+    <bean id="oauthUserApprovalHandler"
+          class="com.enlinkmob.ucenterapi.service.OauthUserApprovalHandler">
+        <property name="requestFactory" ref="oAuth2RequestFactory"/>
+        <property name="tokenStore" ref="tokenStore"/>
+    </bean>
+    <bean id="exactMatchRedirectResolver"
+          class="org.springframework.security.oauth2.provider.endpoint.ExactMatchRedirectResolver"></bean>
+
+    <oauth2:authorization-server
+            client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
+            redirect-resolver-ref="exactMatchRedirectResolver" user-approval-handler-ref="oauthUserApprovalHandler"
+    >
+        <oauth2:authorization-code authorization-code-services-ref="myCodeService"/>
+        <oauth2:implicit/>
+        <oauth2:refresh-token/>
+        <oauth2:client-credentials disabled="false"/>
+        <oauth2:password/>
+    </oauth2:authorization-server>
+
+    <!-- 验证器 -->
+    <bean id="oauth2AccessDecisionManager"
+          class="org.springframework.security.access.vote.UnanimousBased">
+        <constructor-arg>
+            <list>
+                <bean
+                        class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
+                <bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <bean
+                        class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!--unity resource server filter -->
+    <oauth2:resource-server id="sysResourceServer"
+                            resource-id="ucenter-sys-resource" token-services-ref="tokenServices"/>
+
+    <!--unity resource server filter -->
+    <oauth2:resource-server id="sysAdminResourceServer"
+                            resource-id="ucenter-sys-admin-resource" token-services-ref="tokenServices"/>
+
+    <!--mobile resource server filter -->
+    <oauth2:resource-server id="userResourceServer"
+                            resource-id="ucenter-resource" token-services-ref="tokenServices"/>
+
+    <bean id="clientCredentialsTokenEndpointFilter"
+          class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
+        <property name="authenticationManager" ref="oauth2AuthenticationManager"/>
+    </bean>
+
+    <sec:http pattern="/oauth/token" create-session="stateless"
+              authentication-manager-ref="oauth2AuthenticationManager"
+              entry-point-ref="oauth2AuthenticationEntryPoint">
+        <sec:intercept-url pattern="/oauth/token" access="authenticated"/>
+        <sec:anonymous enabled="false"/>
+        <sec:http-basic entry-point-ref="oauth2AuthenticationEntryPoint"/>
+
+        <sec:custom-filter ref="clientCredentialsTokenEndpointFilter"
+                           before="BASIC_AUTH_FILTER"/>
+        <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>
+        <sec:csrf disabled="true"/>
+    </sec:http>
+
+
+    <!--unity http configuration
+    <sec:http pattern="/unity/**" create-session="never"
+        entry-point-ref="oauth2AuthenticationEntryPoint"
+        access-decision-manager-ref="oauth2AccessDecisionManager" >
+        <sec:anonymous enabled="false" />
+
+        <sec:intercept-url pattern="/unity/**" access="ROLE_SYS,SCOPE_READ" />
+
+        <sec:custom-filter ref="ucenter-sys-resource" before="PRE_AUTH_FILTER" />
+        <sec:access-denied-handler ref="oauth2AccessDeniedHandler" />
+    </sec:http>
+    mobile http configuration
+    <sec:http pattern="/m/**" create-session="never"
+        entry-point-ref="oauth2AuthenticationEntryPoint"
+        access-decision-manager-ref="oauth2AccessDecisionManager">
+        <sec:anonymous enabled="false" />
+        <sec:intercept-url pattern="/m/**" access="ROLE_USER,SCOPE_READ" />
+
+        <sec:custom-filter ref="sysResourceServer" before="PRE_AUTH_FILTER" />
+        <sec:access-denied-handler ref="oauth2AccessDeniedHandler" />
+    </sec:http>
+     -->
+    <!--user http configuration -->
+    <sec:http pattern="/user/**" create-session="never"
+              entry-point-ref="oauth2AuthenticationEntryPoint"
+              access-decision-manager-ref="oauth2AccessDecisionManager"><!--   oauth2AccessDecisionManager 加入将验证全部  access -->
+
+        <sec:anonymous enabled="false"/>
+        <!--  <sec:custom-filter ref="servletRSAFilter" before="FIRST" />-->
+        <sec:custom-filter ref="sysResourceServer" before="PRE_AUTH_FILTER"/>
+        <sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>
+    </sec:http>
+
+
+    <!--api http configuration
+    <sec:http pattern="/cltAPI/**" create-session="never"
+        entry-point-ref="oauth2AuthenticationEntryPoint"
+        access-decision-manager-ref="oauth2AccessDecisionManager">   oauth2AccessDecisionManager 加入将验证全部  access
+
+        <sec:anonymous enabled="false" />
+
+    <sec:custom-filter ref="sysResourceServer" before="PRE_AUTH_FILTER" />
+    <sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+        <sec:access-denied-handler ref="oauth2AccessDeniedHandler" />
+    </sec:http>-->
+    <!--access-denied-page="/login.jsp?authorization_error=2"-->
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="myUserService">
+            <sec:password-encoder hash="md5">
+                <sec:salt-source user-property="salt"/>
+            </sec:password-encoder>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <sec:http
+            disable-url-rewriting="true" authentication-manager-ref="authenticationManager">
+        <sec:intercept-url pattern="/oauth/**" access="authenticated"/>
+        <sec:intercept-url pattern="/user/regist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/user/customer/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/cltAPI/cltAPI/cltAPIGet" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/userBehavior/getUserBehavior" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/ucapi/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/uc/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/ucserver/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/customerOauth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:form-login authentication-failure-url="/login.jsp?authentication_error=1"
+                        default-target-url="/index.jsp" login-page="/login.jsp"
+                        login-processing-url="/login.do"/>
+        <sec:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
+        <sec:anonymous/>
+        <sec:csrf disabled="true"/>
+    </sec:http>
+
+
+</beans>

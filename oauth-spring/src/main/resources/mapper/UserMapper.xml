@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enlinkmob.ucenterapi.dao.UserMapper">
+    <!-- Result Map-->
+    <resultMap id="resultMap" type="com.enlinkmob.ucenterapi.model.User">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="id_no" property="idNo"/>
+        <result column="phone_num" property="phoneNum"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="birthday" property="birthday"/>
+        <result column="head_icon" property="headIcon"/>
+        <result column="account_status" property="accountStatus"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.AccountStatusHandler"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="status" property="status"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+    </resultMap>
+
+    <sql id="columnList">
+        id,user_name,password,salt,real_name,sex,id_no,phone_num,email,address,birthday,head_icon,account_status,create_time,modify_time,status
+    </sql>
+
+
+    <!-- 查询条件 -->
+    <sql id="whereConditions">
+        <where>
+            1=1
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="salt != null and salt != ''">
+                and salt = #{salt}
+            </if>
+            <if test="realName != null and realName != ''">
+                and real_name = #{realName}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="idNo != null and idNo != ''">
+                and id_no = #{idNo}
+            </if>
+            <if test="phoneNum != null and phoneNum != ''">
+                and phone_num = #{phoneNum}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="headIcon != null and headIcon != ''">
+                and head_icon = #{headIcon}
+            </if>
+            <if test="accountStatus != null and accountStatus != ''">
+                and account_status = #{accountStatus}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="modifyTime != null">
+                and modify_time = #{modifyTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT into user
+        (user_name,password,salt,real_name,sex,id_no,phone_num,email,address,birthday,head_icon,account_status,create_time,modify_time,status)
+        VALUES
+        (#{userName},#{password},#{realName},#{sex},#{idNo},#{phoneNum},#{email},#{address},#{birthday},#{headIcon},#{accountStatus},#{createTime},#{modifyTime},#{status});
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.Collection" useGeneratedKeys="true" keyProperty="id">
+        INSERT into user
+        (user_name,password,salt,real_name,sex,id_no,phone_num,email,address,birthday,head_icon,account_status,create_time,modify_time,status)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userName},#{item.password},#{item.realName},#{item.sex},#{item.idNo},#{item.phoneNum},#{item.email},#{item.address},#{item.birthday},#{item.headIcon},#{item.userType},#{item.accountStatus},#{item.createTime},#{item.modifyTime},#{item.status});
+        </foreach>
+    </insert>
+    <update id="update" parameterType="com.enlinkmob.ucenterapi.model.User">
+        update user set
+        user_name=#{userName},password=#{password},salt=#{salt},real_name=#{realName},sex=#{sex},id_no=#{idNo},phone_num=#{phoneNum},email=#{email},address=#{address},birthday=#{birthday},head_icon=#{headIcon},account_status=#{accountStatus},created_time=#{createdTime},modify_time=#{modifyTime},status=#{status}
+        where id=#{id}
+    </update>
+    <update id="updateUserByName">
+        update user set
+        user_name=#{userName},password=#{password},salt=#{salt},real_name=#{realName},sex=#{sex},id_no=#{idNo},phone_num=#{phoneNum},email=#{email},address=#{address},birthday=#{birthday},head_icon=#{headIcon},account_status=#{accountStatus},created_time=#{createdTime},modify_time=#{modifyTime},status=#{status}
+        where username=#{userName}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from user where id =#{id}
+    </delete>
+    <select id="selectById" resultMap="resultMap" parameterType="int">
+        select
+        <include refid="columnList"/>
+        from user where id = #{id}
+    </select>
+    <!-- 根据条件查询数量-->
+    <select id="selectCountByConditions" resultType="java.lang.Integer"
+            parameterType="com.enlinkmob.ucenterapi.model.User">
+        select count(1) from user
+        <include refid="whereConditions"/>
+    </select>
+    <!-- 根据条件查询 -->
+    <select id="selectByConditions" resultMap="resultMap" parameterType="com.enlinkmob.ucenterapi.model.User">
+        select
+        <include refid="columnList"/>
+        from user
+        <include refid="whereConditions"/>
+
+    </select>
+    <!-- map条件查询数量-->
+    <select id="selectCountByMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1) from user
+        <include refid="whereConditions"/>
+    </select>
+
+    <!-- map条件查询 -->
+    <select id="selectByMap" resultMap="resultMap" parameterType="java.util.Map">
+        select
+        <include refid="columnList"/>
+        from user
+        <include refid="whereConditions"/>
+    </select>
+    <select id="selectByName" resultType="com.enlinkmob.ucenterapi.model.User" parameterType="string">
+        select
+        <include refid="columnList"/>
+        from user WHERE user_name = #{name} and status = 'ENABLE'
+    </select>
+</mapper>

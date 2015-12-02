@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enlinkmob.ucenterapi.dao.AuthorityMapper">
+    <!-- Result Map-->
+    <resultMap id="resultMap" type="com.enlinkmob.ucenterapi.model.Authority">
+        <id column="id" property="id"/>
+        <result column="authority_name" property="authorityName"/>
+        <result column="authority_name_cn" property="authorityNameCN"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- app_user table all fields -->
+    <sql id="columnList">
+	 id,authority_name,authority_name_cn,create_time,modify_time,status
+</sql>
+
+
+    <!-- 查询条件 -->
+    <sql id="whereConditions">
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="authorityName != null and authorityName != ''">
+                and authority_name = #{authorityName}
+            </if>
+            <if test="authorityNameCN != null and authorityNameCN != ''">
+                and authority_name_cn = #{authorityNameCN}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="modifyTime != null">
+                and modify_time = #{modifyTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insert" parameterType="com.enlinkmob.ucenterapi.model.Authority" useGeneratedKeys="true"
+            keyProperty="id">
+    insert into authority(authority_name,authority_name_cn,created_time,modify_time,status)
+    values(#{authorityName},#{authorityNameCN},#{createdTime},#{modifyTime},#{status})
+</insert>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" parameterType="list" keyProperty="id">
+        insert into authority(authority_name,authority_name_cn,created_time,modify_time,status)
+        values
+
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.authorityName},#{item.authorityNameCN},#{item.createdTime},#{item.modifyTime},#{item.status})
+        </foreach>
+    </insert>
+    <!-- 更新方法-->
+    <update id="update" parameterType="com.enlinkmob.ucenterapi.model.Authority">
+    update authority set authority_name=#{authorityName},authority_name_cn=#{authorityNameCN},created_time=#{createdTime},modify_time=#{modifyTime},status=#{status} where id=#{id}
+</update>
+
+    <!-- 删除-->
+    <update id="delete" parameterType="int">
+    delete 	 from authority where id = #{id}
+</update>
+
+    <!-- 根据id查询 -->
+    <select id="selectById" resultMap="resultMap" parameterType="int">
+        select
+        <include refid="columnList"/>
+        from authority where id = #{id}
+    </select>
+
+    <!-- 根据条件查询数量-->
+    <select id="selectCountByConditions" resultType="java.lang.Integer"
+            parameterType="com.enlinkmob.ucenterapi.model.Authority">
+        select count(1) from authority
+        <include refid="whereConditions"/>
+    </select>
+
+    <!-- 根据条件查询 -->
+    <select id="selectByConditions" resultMap="resultMap" parameterType="com.enlinkmob.ucenterapi.model.Authority">
+        select
+        <include refid="columnList"/>
+        from authority
+        <include refid="whereConditions"/>
+
+    </select>
+
+
+    <!-- map条件查询数量-->
+    <select id="selectCountByMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1) from authority
+        <include refid="whereConditions"/>
+    </select>
+
+    <!-- map条件查询 -->
+    <select id="selectByMap" resultMap="resultMap" parameterType="java.util.Map">
+        select
+        <include refid="columnList"/>
+        from authority
+        <include refid="whereConditions"/>
+    </select>
+
+
+</mapper>   

@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wenyu</groupId>
+    <artifactId>sysparent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>sysparent</name>
+    <url>http://maven.apache.org</url>
+
+    <modules>
+        <module>oauth-spring</module>
+    </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <build>
+        <finalName>sysparent</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <encoding>utf-8</encoding>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.0.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Implementation-BuildNumber>
+                                    ${project.version}
+                                </Implementation-BuildNumber>
+                                <Implementation-Title>
+                                    ${project.name}
+                                </Implementation-Title>
+                                <Implementation-Version>
+                                    ${project.version}
+                                </Implementation-Version>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <skip>${test.skip}</skip>
+                        <forkMode>none</forkMode>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Example for MySQL-->
+                <sonar.jdbc.url>
+                    jdbc:mysql://10.255.33.19:3340/sonar?useUnicode=true&amp;characterEncoding=utf8
+                </sonar.jdbc.url>
+                <sonar.jdbc.username>root</sonar.jdbc.username>
+                <sonar.jdbc.password>youxin123</sonar.jdbc.password>
+                <test.skip>true</test.skip>
+            </properties>
+        </profile>
+    </profiles>
+    <dependencies>
+    </dependencies>
+</project>

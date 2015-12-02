@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthAuthoritiesMapper">
+    <resultMap id="authorities" type="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="status" property="status"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+    </resultMap>
+    <sql id="column">
+        id,authority,name,create_time,modify_time,status
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="whereConditions">
+        <where>
+            1=1
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="authority != null and authority != ''">
+                and authority = #{authority}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="modifyTime != null">
+                and modify_time = #{modifyTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="addAuthorities">
+        INSERT INTO oauth_authorities (authority,name,status) VALUES (#{authority},#{name},#{status})
+    </insert>
+    <update id="updateAuthorities">
+        update oauth_authorities
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="authority != null and authority != ''">
+                authority = #{authority}
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status}
+            </if>
+        </trim>
+    </update>
+    <delete id="deleteAuthorities">
+        DELETE from oauth_authorities where id=#{id}
+    </delete>
+    <select id="getAuthorities" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+        SELECT * FROM oauth_authorities WHERE id =#{id}
+    </select>
+    <select id="queryList" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+        SELECT * FROM oauth_authorities
+        <include refid="whereConditions"/>
+    </select>
+</mapper>
