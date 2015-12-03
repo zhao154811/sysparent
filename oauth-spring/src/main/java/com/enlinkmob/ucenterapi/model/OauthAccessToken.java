@@ -1,10 +1,8 @@
 package com.enlinkmob.ucenterapi.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
-@Document(collection = "oauth_access_token")
 public class OauthAccessToken implements Serializable {
 
     private static final long serialVersionUID = -1519909236452220754L;

@@ -5,7 +5,6 @@ import com.enlinkmob.ucenterapi.model.Client;
 import com.enlinkmob.ucenterapi.service.ManageService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,11 +48,6 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public Client getClientByConditon(Map<String, Object> condition) {
-        Criteria criteria = new Criteria();
-
-        for (Map.Entry<String, Object> entry : condition.entrySet()) {
-            criteria.andOperator(Criteria.where(entry.getKey()).is(entry.getValue()));
-        }
         return null;
 //        return this.clientMapper.getObjectByCondition(new Query(criteria));
     }

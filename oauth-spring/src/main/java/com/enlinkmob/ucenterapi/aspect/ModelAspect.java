@@ -7,11 +7,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import javax.management.Query;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -67,10 +65,6 @@ public class ModelAspect {
         Object[] args = pjp.getArgs();
         if (args != null && args.length > 0) {
             for (Object object : args) {
-                if (object instanceof Update) {
-                    ((Update) object).set("modifyTime", new Date());
-
-                }
 
             }
         }
@@ -100,7 +94,6 @@ public class ModelAspect {
         if (args != null && args.length > 0) {
             for (Object object : args) {
                 if (object instanceof Query) {
-                    ((Query) object).addCriteria(Criteria.where("status").is(1));
 
                 }
             }

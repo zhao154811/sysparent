@@ -13,7 +13,6 @@ import com.enlinkmob.ucenterapi.exception.DataExistException;
 import com.enlinkmob.ucenterapi.exception.ParamException;
 import com.enlinkmob.ucenterapi.exception.ResponseException;
 import com.enlinkmob.ucenterapi.model.ResultMessage;
-import com.mongodb.MongoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
@@ -137,22 +136,6 @@ public class MyHandler {
         return jem;
     }
 
-    @ExceptionHandler({MongoException.class})
-    @ResponseStatus(HttpStatus.OK)
-    public
-    @ResponseBody
-    ResultMessage processHttpRequestMethodNotSupportedException(NativeWebRequest request, MongoException e) {
-
-//	        ModelAndView mv = new ModelAndView();
-//	        mv.addObject("error", e.getMessage());
-//	        mv.setViewName("error/exception");
-        ResultMessage jem = new ResultMessage();
-        JSONObject jb = JSONObject.parseObject(e.getMessage());
-        jem.setStatus("309");
-        jem.setMessage((String) jb.get("err"));
-        jem.setJsonResult(null);
-        return jem;
-    }
 
 
     @ExceptionHandler({ResponseException.class})

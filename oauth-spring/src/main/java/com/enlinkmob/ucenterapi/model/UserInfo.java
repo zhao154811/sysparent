@@ -7,10 +7,8 @@
  */
 package com.enlinkmob.ucenterapi.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,13 +18,11 @@ import java.util.Date;
  * @ClassName: UserInfo
  * @date 2014-5-4 下午1:51:58
  */
-@Document(collection = "user_info")
+@Data
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = -8089479822996683718L;
-    @Id
-    private ObjectId _id;
-    @Transient
+    private Long _id;
     private String objId;//用于显示objid;
     private String userName;
     private String realName;//真实姓名
@@ -40,101 +36,6 @@ public class UserInfo implements Serializable {
     private String sex;//性别  male female secret
 
 
-    public void setObjId(String objId) {
-        this.objId = objId;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getHeadIcon() {
-        return headIcon;
-    }
-
-    public void setHeadIcon(String headIcon) {
-        this.headIcon = headIcon;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public ObjectId get_id() {
-        return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
-
-    public String getObjId() {
-        return _id.toString();
-    }
 
 
 }

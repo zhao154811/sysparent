@@ -1,11 +1,9 @@
 package com.enlinkmob.ucenterapi.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by Zhaowy on 2014/6/23.
  */
-@Document(collection = "sms_send_log")
 public class SMSSendLog extends BaseLongEntity {
     private static final long serialVersionUID = -5989152905011672856L;
     //	@Id
