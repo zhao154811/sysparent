@@ -5,7 +5,7 @@
  * @date 2014-4-21 上午10:40:15
  * @version V1.0
  */
-package com.enlinkmob.ucenterapi.service.impl;
+package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import com.enlinkmob.ucenterapi.model.OauthResource;
 import com.enlinkmob.ucenterapi.service.ResourceService;

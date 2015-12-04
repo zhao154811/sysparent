@@ -5,7 +5,7 @@
  * @date 2014-4-21 上午10:01:52
  * @version V1.0
  */
-package com.enlinkmob.ucenterapi.service.impl;
+package com.enlinkmob.ucenterapi.security.access;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;

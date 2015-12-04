@@ -5,7 +5,7 @@
  * @date 2014-4-21 上午10:09:15
  * @version V1.0
  */
-package com.enlinkmob.ucenterapi.service;
+package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;

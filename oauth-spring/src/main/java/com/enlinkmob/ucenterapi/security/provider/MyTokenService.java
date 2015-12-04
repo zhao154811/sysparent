@@ -1,4 +1,4 @@
-package com.enlinkmob.ucenterapi.service;
+package com.enlinkmob.ucenterapi.security.provider;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.AuthenticationException;
@@ -355,7 +355,7 @@ public class MyTokenService
 
     /**
      * The default validity (in seconds) of the access token. Zero or negative
-     * for non-expiring tokens. If a client details service is set the validity
+     * for non-expiring tokens. If a client details provider is set the validity
      * period will be read from he client, defaulting to this value if not
      * defined by the client.
      *
@@ -393,11 +393,11 @@ public class MyTokenService
     }
 
     /**
-     * The client details service to use for looking up clients (if necessary).
+     * The client details provider to use for looking up clients (if necessary).
      * Optional if the access token expiry is set globally via
      * {@link #setAccessTokenValiditySeconds(int)}.
      *
-     * @param clientDetailsService the client details service
+     * @param clientDetailsService the client details provider
      */
     public void setClientDetailsService(
             ClientDetailsService clientDetailsService) {

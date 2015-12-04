@@ -6,7 +6,7 @@
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
     </resultMap>
     <sql id="column">
         id,authority,name,create_time,modify_time,status

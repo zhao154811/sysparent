@@ -1,6 +1,6 @@
 package com.enlinkmob.ucenterapi.dao.typehandler;
 
-import com.enlinkmob.ucenterapi.Enum.AccountStatus;
+import com.enlinkmob.ucenterapi.Enum.SexEnum;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
@@ -12,12 +12,12 @@ import java.sql.SQLException;
 /**
  * Created by zhaowenyu@ucredit.com on 2015/11/10.
  */
-public class AccountStatusHandler extends BaseTypeHandler<AccountStatus> {
-    private Class<AccountStatus> type;
+public class SexEnumHandler extends BaseTypeHandler<SexEnum> {
+    private Class<SexEnum> type;
 
-    private final AccountStatus[] enums;
+    private final SexEnum[] enums;
 
-    public AccountStatusHandler(Class<AccountStatus> type) {
+    public SexEnumHandler(Class<SexEnum> type) {
         if (type == null)
             throw new IllegalArgumentException("Type argument cannot be null");
         this.type = type;
@@ -28,38 +28,38 @@ public class AccountStatusHandler extends BaseTypeHandler<AccountStatus> {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, AccountStatus parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, SexEnum parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, parameter.getEnString());
     }
 
     @Override
-    public AccountStatus getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public SexEnum getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String status = rs.getString(columnName);
         if (rs.wasNull()) {
             return null;
         } else {
-            return locateStatusEnum(status);
+            return locateSexEnum(status);
         }
     }
 
     @Override
-    public AccountStatus getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public SexEnum getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String status = rs.getString(columnIndex);
         if (rs.wasNull()) {
             return null;
         } else {
-            return locateStatusEnum(status);
+            return locateSexEnum(status);
         }
     }
 
     @Override
-    public AccountStatus getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public SexEnum getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         // 根据数据库存储类型决定获取类型，本例子中数据库中存放INT类型
         String status = cs.getString(columnIndex);
         if (cs.wasNull()) {
             return null;
         } else {
-            return locateStatusEnum(status);
+            return locateSexEnum(status);
         }
     }
 
@@ -70,8 +70,8 @@ public class AccountStatusHandler extends BaseTypeHandler<AccountStatus> {
      * @param status 数据库中存的Status字段
      * @return status 对应的枚举类
      */
-    private AccountStatus locateStatusEnum(String status) {
-        for (AccountStatus stu : enums) {
+    private SexEnum locateSexEnum(String status) {
+        for (SexEnum stu : enums) {
             if (stu.getEnString().equals(status)) {
                 return stu;
             }

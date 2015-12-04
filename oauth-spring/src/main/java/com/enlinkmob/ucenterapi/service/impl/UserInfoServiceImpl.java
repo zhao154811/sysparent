@@ -1,6 +1,6 @@
 /**
  * @Title: UserInfoServiceImpl.java
- * @Package com.enlinkmob.ucenterapi.service
+ * @Package com.enlinkmob.ucenterapi.provider
  * @author A18ccms A18ccms_gmail_com
  * @date 2014-5-4 下午2:55:58
  * @version V1.0

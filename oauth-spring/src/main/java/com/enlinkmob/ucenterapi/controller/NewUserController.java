@@ -38,7 +38,7 @@ public class NewUserController {
     @ResponseBody
     Object gateway(User user, String client_id, String userSign, String method, CustomerUserInfo customerUserInfo, String openId, Long userId, HttpServletRequest request, String birth) throws Exception {
         JSONObject jb = null;
-        newUserService.sendVerifyCode(user.getPhoneNum());
+//        newUserService.sendVerifyCode("");
         String storeChannel = null;
         List<MultipartFile> filedatas = null;
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -109,7 +109,7 @@ public class NewUserController {
                 o = newUserService.loginById(userId, client_id);
                 break;
             case "sendSms":
-                o = newUserService.sendVerifyCode(user.getPhoneNum());
+                o = newUserService.sendVerifyCode("");
                 break;
             default:
                 ResultMessage rm = new ResultMessage();

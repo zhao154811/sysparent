@@ -8,7 +8,7 @@
         <result column="auth_create_time" property="createTime"/>
         <result column="auth_modify_time" property="modifyTime"/>
         <result column="auth_status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
     </resultMap>
     <!-- Result Map-->
     <resultMap id="userResultMap" type="com.enlinkmob.ucenterapi.model.User">
@@ -25,11 +25,11 @@
         <result column="birthday" property="birthday"/>
         <result column="head_icon" property="headIcon"/>
         <result column="account_status" property="accountStatus"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.AccountStatusHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AccountStatusHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
         <collection property="authorities" ofType="com.enlinkmob.ucenterapi.model.OauthAuthorities"
                     resultMap="authoritiesResultMap"/>
     </resultMap>

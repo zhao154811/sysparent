@@ -12,6 +12,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.security.oauth2.provider.error.DefaultWebResponseExceptionTranslator;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -88,14 +89,14 @@ public class MyFastJsonHttpMessageConverter extends FastJsonHttpMessageConverter
             text = MyJSON.toJSONString(obj, myPropfilter, this.getFeatures());
         } else if (myPropfilter == null && config != null) {
             text = MyJSON.toJSONString(obj, config, this.getFeatures());
+        } else if (obj instanceof DefaultWebResponseExceptionTranslator) {
+            text = obj.toString();
+        } else {
+            text = MyJSON.toJSONString(obj, this.getFeatures());
         }
 //		else if (jem != null) {
 //			text = MyJSON.toJSONString(jem, this.getFeatures());
 //		}
-        else {
-//            text=obj.toString();
-            text = MyJSON.toJSONString(obj, this.getFeatures());
-        }
         byte[] bytes = text.getBytes(this.getCharset());
         myPropfilter = null;
         out.write(bytes);

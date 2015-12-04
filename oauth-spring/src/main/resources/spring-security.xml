@@ -2,15 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:sec="http://www.springframework.org/schema/security"
        xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+       xmlns:bean="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
 	 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 
     <bean id="tokenStore"
-          class="com.enlinkmob.ucenterapi.service.MongoTokenStore">
+          class="com.enlinkmob.ucenterapi.security.provider.MongoTokenStore">
     </bean>
-    <bean id="tokenServices" class="com.enlinkmob.ucenterapi.service.MyTokenService">
+    <bean id="tokenServices" class="com.enlinkmob.ucenterapi.security.provider.MyTokenService">
         <!--class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"-->
         <property name="tokenStore" ref="tokenStore"/>
         <property name="clientDetailsService" ref="clientDetailsService"/>
@@ -18,7 +19,7 @@
     </bean>
 
     <bean id="clientDetailsService"
-          class="com.enlinkmob.ucenterapi.service.MongoClientDetailService">
+          class="com.enlinkmob.ucenterapi.security.provider.MongoClientDetailService">
     </bean>
     <bean id="oauth2ClientDetailsUserService"
           class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
@@ -42,7 +43,7 @@
     </bean>
 
     <bean id="oauthUserApprovalHandler"
-          class="com.enlinkmob.ucenterapi.service.OauthUserApprovalHandler">
+          class="com.enlinkmob.ucenterapi.security.provider.approval.OauthUserApprovalHandler">
         <property name="requestFactory" ref="oAuth2RequestFactory"/>
         <property name="tokenStore" ref="tokenStore"/>
     </bean>
@@ -55,7 +56,7 @@
     >
         <oauth2:authorization-code authorization-code-services-ref="myCodeService"/>
         <oauth2:implicit/>
-        <oauth2:refresh-token/>
+        <oauth2:refresh-token disabled="false"/>
         <oauth2:client-credentials disabled="false"/>
         <oauth2:password/>
     </oauth2:authorization-server>
@@ -65,11 +66,10 @@
           class="org.springframework.security.access.vote.UnanimousBased">
         <constructor-arg>
             <list>
-                <bean
-                        class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
+                <bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
                 <bean class="org.springframework.security.access.vote.RoleVoter"/>
-                <bean
-                        class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+                <bean:ref bean="urlVoter"/>
             </list>
         </constructor-arg>
     </bean>
@@ -94,6 +94,7 @@
     <sec:http pattern="/oauth/token" create-session="stateless"
               authentication-manager-ref="oauth2AuthenticationManager"
               entry-point-ref="oauth2AuthenticationEntryPoint">
+        <sec:csrf disabled="true"/>
         <sec:intercept-url pattern="/oauth/token" access="authenticated"/>
         <sec:anonymous enabled="false"/>
         <sec:http-basic entry-point-ref="oauth2AuthenticationEntryPoint"/>
@@ -128,14 +129,14 @@
     </sec:http>
      -->
     <!--user http configuration -->
-    <sec:http pattern="/user/**" create-session="never"
+    <sec:http pattern="/uc/**" create-session="never"
               entry-point-ref="oauth2AuthenticationEntryPoint"
               access-decision-manager-ref="oauth2AccessDecisionManager"><!--   oauth2AccessDecisionManager 加入将验证全部  access -->
-
+        <sec:csrf disabled="true"/>
         <sec:anonymous enabled="false"/>
         <!--  <sec:custom-filter ref="servletRSAFilter" before="FIRST" />-->
         <sec:custom-filter ref="sysResourceServer" before="PRE_AUTH_FILTER"/>
-        <sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <!--<sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>-->
         <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>
     </sec:http>
 

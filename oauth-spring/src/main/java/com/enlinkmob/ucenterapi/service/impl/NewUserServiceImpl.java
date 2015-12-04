@@ -428,19 +428,27 @@ public class NewUserServiceImpl implements NewUserService {
 
     public ResultMessage getUserInfo(Long objId, String userSign, String client_id) {
         ResultMessage rs = null;
-        switch (client_id) {
-            case "auto-china":
-                rs = this.getUserInfobyUser(objId, userSign);
-                break;
-            case "enlink_activity_manage":
-                rs = this.getUserInfobyManage(objId);
-                break;
-            default:
-                rs = new ResultMessage();
-                rs.setStatus("201");
-                rs.setMessage("找不到对应的处理分支");
-                rs.setMessage(null);
-        }
+//        switch (client_id) {
+//            case "auto-china":
+//                rs = this.getUserInfobyUser(objId, userSign);
+//                break;
+//            case "enlink_activity_manage":
+//                rs = this.getUserInfobyManage(objId);
+//                break;
+//            default:
+//                rs = new ResultMessage();
+//                rs.setStatus("201");
+//                rs.setMessage("找不到对应的处理分支");
+//                rs.setMessage(null);
+//        }
+        User user = this.userService.getUserById(objId);
+        rs = new ResultMessage();
+        rs.setStatus("201");
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        rs.setJsonResult(map);
+        rs.setMessage("找不到对应的处理分支");
+        rs.setMessage(null);
         return rs;
     }
 

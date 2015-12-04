@@ -1,6 +1,6 @@
 /**
  * @Title: ResourceServiceImpl.java
- * @Package com.enlinkmob.ucenterapi.mongooauth.service
+ * @Package com.enlinkmob.ucenterapi.mongooauth.provider
  * @author A18ccms A18ccms_gmail_com
  * @date 2014-4-21 上午11:53:46
  * @version V1.0

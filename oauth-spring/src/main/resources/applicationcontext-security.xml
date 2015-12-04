@@ -78,6 +78,8 @@
                 <value>WriteNullListAsEmpty</value>
                 <value>WriteNullNumberAsZero</value>
                 <value>WriteNullBooleanAsFalse</value>
+                <value>WriteEnumUsingToString</value>
+                <value>WriteDateUseDateFormat</value>
             </list>
         </property>
     </bean>

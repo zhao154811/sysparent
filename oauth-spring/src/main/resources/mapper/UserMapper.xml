@@ -8,7 +8,7 @@
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
         <result column="real_name" property="realName"/>
-        <result column="sex" property="sex"/>
+        <result column="sex" property="sex" typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.SexEnumHandler"/>
         <result column="id_no" property="idNo"/>
         <result column="phone_num" property="phoneNum"/>
         <result column="email" property="email"/>
@@ -16,11 +16,11 @@
         <result column="birthday" property="birthday"/>
         <result column="head_icon" property="headIcon"/>
         <result column="account_status" property="accountStatus"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.AccountStatusHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AccountStatusHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typeHandler.StatusEnumHandler"/>
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
     </resultMap>
 
     <sql id="columnList">
@@ -110,7 +110,7 @@
     <delete id="delete" parameterType="int">
         delete from user where id =#{id}
     </delete>
-    <select id="selectById" resultMap="resultMap" parameterType="int">
+    <select id="selectById" resultMap="resultMap" parameterType="long">
         select
         <include refid="columnList"/>
         from user where id = #{id}

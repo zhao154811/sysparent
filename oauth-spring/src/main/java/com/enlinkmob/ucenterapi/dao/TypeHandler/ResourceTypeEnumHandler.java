@@ -1,4 +1,4 @@
-package com.enlinkmob.ucenterapi.dao.typeHandler;
+package com.enlinkmob.ucenterapi.dao.typehandler;
 
 import com.enlinkmob.ucenterapi.Enum.OauthResourceEnum;
 import org.apache.ibatis.type.BaseTypeHandler;

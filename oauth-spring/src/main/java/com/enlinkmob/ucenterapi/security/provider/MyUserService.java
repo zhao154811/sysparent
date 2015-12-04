@@ -1,4 +1,4 @@
-package com.enlinkmob.ucenterapi.service;
+package com.enlinkmob.ucenterapi.security.provider;
 
 import com.enlinkmob.ucenterapi.dao.UserAuthoritiesMapper;
 import com.enlinkmob.ucenterapi.dao.UserMapper;

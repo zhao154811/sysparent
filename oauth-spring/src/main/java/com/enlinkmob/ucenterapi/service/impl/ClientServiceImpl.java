@@ -1,6 +1,6 @@
 /**
  * @Title: ClientServiceImpl.java
- * @Package com.enlinkmob.ucenterapi.service
+ * @Package com.enlinkmob.ucenterapi.provider
  * @author A18ccms A18ccms_gmail_com
  * @date 2014-4-24 下午2:17:23
  * @version V1.0

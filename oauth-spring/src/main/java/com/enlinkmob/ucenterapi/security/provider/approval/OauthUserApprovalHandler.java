@@ -1,4 +1,4 @@
-package com.enlinkmob.ucenterapi.service;
+package com.enlinkmob.ucenterapi.security.provider.approval;
 
 import com.enlinkmob.ucenterapi.dao.OauthClientDetailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
