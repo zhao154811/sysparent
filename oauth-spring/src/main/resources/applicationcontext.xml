@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
@@ -15,6 +14,7 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
+    <import resource="classpath:applicationcontext-datasource.xml"/>
     <context:annotation-config/>
     <context:component-scan base-package="com.enlinkmob"/>  <!-- 自动扫描所有注解该路径 -->
     <mvc:annotation-driven>
@@ -53,27 +53,11 @@
     <context:property-placeholder location="classpath:ucconfig.properties"
                                   ignore-unresolvable="true"/>
 
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="${redis.maxIdle}"/>
-        <property name="maxTotal" value="${redis.maxActive}"/>
-        <property name="maxWaitMillis" value="${redis.maxWait}"/>
-        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
-    </bean>
 
     <bean id="serverProperties" class="com.enlinkmob.ucenterapi.util.ServerProperties">
         <property name="host" value="${host}"/>
         <property name="headIconLocal" value="${headIconLocal}"/>
 
-    </bean>
-
-
-    <bean id="connectionFactory"
-          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:hostName="${redis.host}" p:port="6379"
-          p:poolConfig-ref="poolConfig"/>
-
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
 
     <bean id="fastJsonHttpMessageConverter"
@@ -131,27 +115,6 @@
     <!--<mongo:repositories base-package="com.enlinkmob"/>-->
 
 
-    <!-- 设置数据源属性 -->
-    <bean id="druidDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
-          init-method="init" destroy-method="close">
-        <property name="uniqueResourceName" value="druid_data_resource"/>
-        <property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource"/>
-        <property name="xaProperties">
-            <props>
-                <prop key="url">${mysql.host}</prop>
-                <prop key="username">${mysql.user}</prop>
-                <prop key="password">${mysql.pwd}</prop>
-            </props>
-        </property>
-    </bean>
-
-    <!-- myBatis文件 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="druidDataSource"/>
-        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
-    </bean>
-
     <!-- 配置dao -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.enlinkmob.ucenterapi.dao"/>
@@ -181,7 +144,6 @@
     <!-- 配置事务传播特性 -->
     <tx:advice id="transactionAdvice" transaction-manager="jtaTransactionManager">
         <tx:attributes>
-
             <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="move*" propagation="REQUIRED" rollback-for="Exception"/>

@@ -10,6 +10,7 @@
 
     <modules>
         <module>oauth-spring</module>
+        <module>datasource</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -91,6 +92,11 @@
     </build>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.wenyu</groupId>
+                <artifactId>datasource</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
             <!--test-->
             <dependency>
                 <groupId>junit</groupId>

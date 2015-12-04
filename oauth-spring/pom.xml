@@ -37,13 +37,12 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.wenyu</groupId>
+            <artifactId>datasource</artifactId>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-        </dependency>
-        <!--db配置-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
         </dependency>
         <dependency>
             <groupId>com.atomikos</groupId>
@@ -59,15 +58,7 @@
         </dependency>
         <dependency>
             <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.atomikos</groupId>
             <artifactId>transactions-jta</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.transaction</groupId>
@@ -76,10 +67,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -92,10 +79,6 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -172,10 +155,6 @@
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
@@ -224,11 +203,6 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-        </dependency>
-        <!-- mybatis/spring -->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
