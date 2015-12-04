@@ -35,7 +35,7 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 
     private RequestMatcher urlMatcher;
 
-    private HashMap<String, Collection<ConfigAttribute>> resourceMap = null;
+    private HashMap<String, Map<String, Collection<ConfigAttribute>>> resourceMap = null;
 
     @PostConstruct
     public void init() {
@@ -57,18 +57,27 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
                  * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
 	             * sparta 
 	             */
-        resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
-
+        resourceMap = new HashMap<>();
+        Collection<ConfigAttribute> authories = null;
+        Collection<ConfigAttribute> scopes = null;
         for (OauthResource resource : resources) {
-            Collection<ConfigAttribute> atts = null;
+            Map<String, Collection<ConfigAttribute>> rm = new HashMap<>();
             if (resource.getAuthories() != null) {
-                atts = listToCollection(resource.getAuthories());
+                authories = StringToCollection(resource.getAuthories());
             }
-            if (atts != null) {
-                resourceMap.put(resource.getResource_string(), atts);
+            if (resource.getScope() != null) {
+                scopes = StringToCollection(resource.getScope());
             }
+            if (authories != null) {
+                rm.put("authories", authories);
+            }
+            if (scopes != null) {
+                rm.put("scopes", scopes);
+            }
+            resourceMap.put(resource.getResource_url(), rm);
 
         }
+
 
     }
 
@@ -78,12 +87,10 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
      * @param authories 角色集合
      * @return list 封装好的Collection集合
      */
-    private Collection<ConfigAttribute> listToCollection(List<String> authories) {
-        List<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
-
-        for (String string : authories) {
+    private Collection<ConfigAttribute> StringToCollection(String authories) {
+        List<ConfigAttribute> list = new ArrayList<>();
+        for (String string : authories.split(",")) {
             list.add(new SecurityConfig(string));
-
         }
         return list;
     }
@@ -116,7 +123,9 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
             String resURL = ite.next();
             urlMatcher = new AntPathRequestMatcher(resURL);
             if (urlMatcher.matches(req)) {
-                return resourceMap.get(resURL);
+                Map<String, Collection<ConfigAttribute>> sourcemap = resourceMap.get(resURL);
+
+                return;
             }
         }
         return null;

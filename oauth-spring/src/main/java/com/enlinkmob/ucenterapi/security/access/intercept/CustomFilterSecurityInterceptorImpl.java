@@ -9,6 +9,7 @@ package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
@@ -55,7 +56,6 @@ public class CustomFilterSecurityInterceptorImpl extends AbstractSecurityInterce
      * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
      */
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     /* (非 Javadoc)
@@ -71,6 +71,8 @@ public class CustomFilterSecurityInterceptorImpl extends AbstractSecurityInterce
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
+        this.setRejectPublicInvocations(true);
+
         infoke(fi);
 
     }
@@ -82,8 +84,12 @@ public class CustomFilterSecurityInterceptorImpl extends AbstractSecurityInterce
      * @throws IOException
      */
     private void infoke(FilterInvocation fi) throws IOException, ServletException {
-        InterceptorStatusToken token = super.beforeInvocation(fi);
-
+        InterceptorStatusToken token = null;
+        try {
+            token = super.beforeInvocation(fi);
+        } catch (IllegalArgumentException e) {
+            throw new AccessDeniedException("access denied");
+        }
         try {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         } finally {

@@ -129,14 +129,14 @@
     </sec:http>
      -->
     <!--user http configuration -->
-    <sec:http pattern="/uc/**" create-session="never"
+    <sec:http pattern="/uc/**" create-session="never" use-expressions="false"
               entry-point-ref="oauth2AuthenticationEntryPoint"
               access-decision-manager-ref="oauth2AccessDecisionManager"><!--   oauth2AccessDecisionManager 加入将验证全部  access -->
         <sec:csrf disabled="true"/>
         <sec:anonymous enabled="false"/>
         <!--  <sec:custom-filter ref="servletRSAFilter" before="FIRST" />-->
         <sec:custom-filter ref="sysResourceServer" before="PRE_AUTH_FILTER"/>
-        <!--<sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>-->
+        <sec:custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
         <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>
     </sec:http>
 
@@ -162,24 +162,24 @@
         </sec:authentication-provider>
     </sec:authentication-manager>
 
-    <sec:http
-            disable-url-rewriting="true" authentication-manager-ref="authenticationManager">
-        <sec:intercept-url pattern="/oauth/**" access="authenticated"/>
-        <sec:intercept-url pattern="/user/regist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/user/customer/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/cltAPI/cltAPI/cltAPIGet" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/userBehavior/getUserBehavior" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/ucapi/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/uc/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/ucserver/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/customerOauth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:form-login authentication-failure-url="/login.jsp?authentication_error=1"
-                        default-target-url="/index.jsp" login-page="/login.jsp"
-                        login-processing-url="/login.do"/>
-        <sec:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
-        <sec:anonymous/>
-        <sec:csrf disabled="true"/>
-    </sec:http>
+    <!--<sec:http-->
+    <!--disable-url-rewriting="true" authentication-manager-ref="authenticationManager">-->
+    <!--<sec:intercept-url pattern="/oauth/**" access="authenticated"/>-->
+    <!--<sec:intercept-url pattern="/user/regist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/user/customer/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/cltAPI/cltAPI/cltAPIGet" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/userBehavior/getUserBehavior" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/ucapi/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/uc/**" access="authenticated"/>-->
+    <!--<sec:intercept-url pattern="/ucserver/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:intercept-url pattern="/customerOauth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+    <!--<sec:form-login authentication-failure-url="/login.jsp?authentication_error=1"-->
+    <!--default-target-url="/index.jsp" login-page="/login.jsp"-->
+    <!--login-processing-url="/login.do"/>-->
+    <!--<sec:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>-->
+    <!--<sec:anonymous/>-->
+    <!--<sec:csrf disabled="true"/>-->
+    <!--</sec:http>-->
 
 
 </beans>

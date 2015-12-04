@@ -10,6 +10,7 @@ package com.enlinkmob.ucenterapi.util;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.enlinkmob.ucenterapi.exception.DataExistException;
+import com.enlinkmob.ucenterapi.exception.OauthSecurityException;
 import com.enlinkmob.ucenterapi.exception.ParamException;
 import com.enlinkmob.ucenterapi.exception.ResponseException;
 import com.enlinkmob.ucenterapi.model.ResultMessage;
@@ -137,7 +138,6 @@ public class MyHandler {
     }
 
 
-
     @ExceptionHandler({ResponseException.class})
     @ResponseStatus(HttpStatus.OK)
     public
@@ -187,5 +187,20 @@ public class MyHandler {
         return jem;
     }
 
+    @ExceptionHandler({OauthSecurityException.class})
+    @ResponseStatus(HttpStatus.OK)
+    public
+    @ResponseBody
+    ResultMessage processJSONException(NativeWebRequest request, OauthSecurityException e) {
+
+//	        ModelAndView mv = new ModelAndView();
+//	        mv.addObject("error", e.getMessage());
+//	        mv.setViewName("error/exception");
+        ResultMessage jem = new ResultMessage();
+        jem.setMessage(e.getMessage());
+        jem.setJsonResult(null);
+        jem.setStatus("313");
+        return jem;
+    }
 
 }

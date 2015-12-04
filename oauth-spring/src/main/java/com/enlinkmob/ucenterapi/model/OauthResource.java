@@ -9,8 +9,6 @@ package com.enlinkmob.ucenterapi.model;
 
 import com.enlinkmob.ucenterapi.Enum.OauthResourceEnum;
 
-import java.util.List;
-
 /**
  * @author Zhaowy
  * @ClassName: Resource
@@ -23,25 +21,19 @@ public class OauthResource extends BaseLongEntity {
 
     //	@Id
 //	private ObjectId _id;
-    private String resource_name;
+    private String resource_url;
     private OauthResourceEnum resource_type;
-    private String resource_string;
+    private String resource_cn_name;
     private String resource_desc;
-    private List<String> authories;
+    private String authories;
     private String scope;
 
-    //	public ObjectId get_id() {
-//		return _id;
-//	}
-//	public void set_id(ObjectId _id) {
-//		this._id = _id;
-//	}
-    public String getResource_name() {
-        return resource_name;
+    public String getResource_url() {
+        return resource_url;
     }
 
-    public void setResource_name(String resource_name) {
-        this.resource_name = resource_name;
+    public void setResource_url(String resource_url) {
+        this.resource_url = resource_url;
     }
 
     public OauthResourceEnum getResource_type() {
@@ -52,12 +44,12 @@ public class OauthResource extends BaseLongEntity {
         this.resource_type = resource_type;
     }
 
-    public String getResource_string() {
-        return resource_string;
+    public String getResource_cn_name() {
+        return resource_cn_name;
     }
 
-    public void setResource_string(String resource_string) {
-        this.resource_string = resource_string;
+    public void setResource_cn_name(String resource_cn_name) {
+        this.resource_cn_name = resource_cn_name;
     }
 
     public String getResource_desc() {
@@ -76,11 +68,11 @@ public class OauthResource extends BaseLongEntity {
         this.scope = scope;
     }
 
-    public List<String> getAuthories() {
+    public String getAuthories() {
         return authories;
     }
 
-    public void setAuthories(List<String> authories) {
+    public void setAuthories(String authories) {
         this.authories = authories;
     }
 

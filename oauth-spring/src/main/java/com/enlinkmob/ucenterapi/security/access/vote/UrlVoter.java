@@ -25,7 +25,7 @@ public class UrlVoter implements AccessDecisionVoter<Object> {
 
     @Override
     public boolean supports(ConfigAttribute attribute) {
-        return false;
+        return true;
     }
 
     @Override
