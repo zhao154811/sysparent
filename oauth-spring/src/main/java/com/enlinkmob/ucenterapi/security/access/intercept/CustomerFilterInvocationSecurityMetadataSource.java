@@ -38,6 +38,12 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 
     private HashMap<String, Collection<ConfigAttribute>> resourceMap = null;
 
+
+    public HashMap<String, Collection<ConfigAttribute>> getResourceMap() {
+        return resourceMap;
+    }
+
+
     @PostConstruct
     public void init() {
         loadResourceDefine();

@@ -8,6 +8,7 @@
 package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -36,6 +37,7 @@ public class CustomFilterSecurityInterceptorImpl extends AbstractSecurityInterce
 
 
     @Autowired
+    @Qualifier(value = "oauth2AccessDecisionManager")
     @Override
     public void setAccessDecisionManager(
             AccessDecisionManager customAccessDecisionManager) {
