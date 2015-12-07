@@ -152,4 +152,9 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
         return true;
     }
 
+    public void refreshResourceMap(){
+        this.resourceMap=null;
+        this.loadResourceDefine();
+    }
+
 }
