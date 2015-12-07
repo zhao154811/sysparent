@@ -9,7 +9,7 @@ package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import com.enlinkmob.ucenterapi.model.OauthResource;
 import com.enlinkmob.ucenterapi.service.ResourceService;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -36,7 +36,13 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 
     private RequestMatcher urlMatcher;
 
-    private HashMap<String,  Collection<ConfigAttribute>> resourceMap = null;
+    private HashMap<String, Collection<ConfigAttribute>> resourceMap = null;
+
+
+    public HashMap<String, Collection<ConfigAttribute>> getResourceMap() {
+        return resourceMap;
+    }
+
 
     @PostConstruct
     public void init() {
@@ -59,17 +65,16 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 	             * sparta 
 	             */
         resourceMap = new HashMap<>();
-        Collection<ConfigAttribute> authories = null;
+        Collection<ConfigAttribute> authories = new ArrayList<>();
         for (OauthResource resource : resources) {
-           Collection<ConfigAttribute> rm = new ArrayList<>();
-            if (resource.getAuthories() != null) {
+            if (StringUtils.isNotEmpty(resource.getAuthories())) {
                 authories = StringToCollection(resource.getAuthories());
             }
-            if (resource.getScope() != null) {
+            if (StringUtils.isNotEmpty(resource.getScope())) {
                 authories.addAll(StringToCollection(resource.getScope()));
             }
-
             resourceMap.put(resource.getResource_url(), authories);
+
         }
 
 
@@ -117,8 +122,8 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
             String resURL = ite.next();
             urlMatcher = new AntPathRequestMatcher(resURL);
             if (urlMatcher.matches(req)) {
-                Collection<ConfigAttribute> sourcemap = resourceMap.get(resURL);
-                return sourcemap;
+                Collection<ConfigAttribute> sourcelist = resourceMap.get(resURL);
+                return sourcelist;
             }
         }
         return null;
@@ -145,6 +150,11 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
     public boolean supports(Class<?> clazz) {
         //  Auto-generated method stub
         return true;
+    }
+
+    public void refreshResourceMap(){
+        this.resourceMap=null;
+        this.loadResourceDefine();
     }
 
 }
