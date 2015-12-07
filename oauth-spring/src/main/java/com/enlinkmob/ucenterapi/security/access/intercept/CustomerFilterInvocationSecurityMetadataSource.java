@@ -9,6 +9,7 @@ package com.enlinkmob.ucenterapi.security.access.intercept;
 
 import com.enlinkmob.ucenterapi.model.OauthResource;
 import com.enlinkmob.ucenterapi.service.ResourceService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -35,7 +36,7 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 
     private RequestMatcher urlMatcher;
 
-    private HashMap<String, Map<String, Collection<ConfigAttribute>>> resourceMap = null;
+    private HashMap<String,  Collection<ConfigAttribute>> resourceMap = null;
 
     @PostConstruct
     public void init() {
@@ -59,23 +60,16 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 	             */
         resourceMap = new HashMap<>();
         Collection<ConfigAttribute> authories = null;
-        Collection<ConfigAttribute> scopes = null;
         for (OauthResource resource : resources) {
-            Map<String, Collection<ConfigAttribute>> rm = new HashMap<>();
+           Collection<ConfigAttribute> rm = new ArrayList<>();
             if (resource.getAuthories() != null) {
                 authories = StringToCollection(resource.getAuthories());
             }
             if (resource.getScope() != null) {
-                scopes = StringToCollection(resource.getScope());
+                authories.addAll(StringToCollection(resource.getScope()));
             }
-            if (authories != null) {
-                rm.put("authories", authories);
-            }
-            if (scopes != null) {
-                rm.put("scopes", scopes);
-            }
-            resourceMap.put(resource.getResource_url(), rm);
 
+            resourceMap.put(resource.getResource_url(), authories);
         }
 
 
@@ -123,9 +117,8 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
             String resURL = ite.next();
             urlMatcher = new AntPathRequestMatcher(resURL);
             if (urlMatcher.matches(req)) {
-                Map<String, Collection<ConfigAttribute>> sourcemap = resourceMap.get(resURL);
-
-                return;
+                Collection<ConfigAttribute> sourcemap = resourceMap.get(resURL);
+                return sourcemap;
             }
         }
         return null;
