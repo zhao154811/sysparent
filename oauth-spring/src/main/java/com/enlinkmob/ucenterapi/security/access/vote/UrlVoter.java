@@ -1,5 +1,6 @@
 package com.enlinkmob.ucenterapi.security.access.vote;
 
+import com.enlinkmob.ucenterapi.Enum.StatusEnum;
 import com.enlinkmob.ucenterapi.model.OauthResource;
 import com.enlinkmob.ucenterapi.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class UrlVoter implements AccessDecisionVoter<Object> {
             String resURL = resource.getResource_url();
             urlMatcher = new AntPathRequestMatcher(resURL);
             if (urlMatcher.matches(request)) {
-                if (resource.getStatus().getEnString().equalsIgnoreCase("enable")) {
+                if (resource.getStatus() == StatusEnum.ENABLE) {
                     result = AccessDecisionVoter.ACCESS_GRANTED;
                 }
             }
