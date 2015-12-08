@@ -1,0 +1,8 @@
+.idea
+/target/
+/.settings
+ucenterapi.war
+setup_alpha.sh
+setup_alpha_2.sh
+ROOT.war
+*.iml
