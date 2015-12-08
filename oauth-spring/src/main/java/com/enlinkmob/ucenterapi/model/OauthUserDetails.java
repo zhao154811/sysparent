@@ -84,4 +84,8 @@ public class OauthUserDetails implements UserDetails {
     }
 
 
+    public com.enlinkmob.ucenterapi.model.User getUser() {
+        return user;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.enlinkmob.ucenterapi.security.provider;
 
+import com.enlinkmob.ucenterapi.model.OauthUserDetails;
+import com.enlinkmob.ucenterapi.util.UserThreadLocal;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.*;
@@ -149,6 +151,7 @@ public class MyTokenService
     }
 
     public OAuth2AccessToken getAccessToken(OAuth2Authentication authentication) {
+//        UserThreadLocal.getContext().setCurrentUser();
         return tokenStore.getAccessToken(authentication);
     }
 
@@ -209,6 +212,8 @@ public class MyTokenService
 
         OAuth2Authentication result = tokenStore
                 .readAuthentication(accessToken);
+        OauthUserDetails userDetails = (OauthUserDetails) result.getPrincipal();
+        UserThreadLocal.getContext().setCurrentUser(userDetails.getUser());
         return result;
     }
 

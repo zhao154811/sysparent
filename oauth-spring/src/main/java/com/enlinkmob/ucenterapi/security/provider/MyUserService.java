@@ -1,5 +1,6 @@
 package com.enlinkmob.ucenterapi.security.provider;
 
+import com.enlinkmob.ucenterapi.Enum.AuthorityType;
 import com.enlinkmob.ucenterapi.dao.UserAuthoritiesMapper;
 import com.enlinkmob.ucenterapi.dao.UserMapper;
 import com.enlinkmob.ucenterapi.model.OauthAuthorities;
@@ -26,7 +27,7 @@ public class MyUserService implements UserDetailsService {
             throws UsernameNotFoundException {
 //        User user = userMapper.selectByName(userName);
 
-        User user = userAuthoritiesMapper.getUserWithAuthoritiesByName(userName);
+        User user = userAuthoritiesMapper.getUserWithAuthoritiesByName(userName, AuthorityType.SCOPE);
         OauthUserDetails userdetail = new OauthUserDetails(user == null ? new User() : user);
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         if (user != null && user.getAuthorities() != null) {

@@ -7,12 +7,16 @@
  */
 package com.enlinkmob.ucenterapi.security.access.intercept;
 
+import com.enlinkmob.ucenterapi.model.MySecurityConfig;
 import com.enlinkmob.ucenterapi.model.OauthResource;
 import com.enlinkmob.ucenterapi.service.ResourceService;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -31,17 +35,17 @@ import java.util.*;
 @Service("customerFilterInvocationSecurityMetadataSource")
 public class CustomerFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
+    private final String RESOURCE_MAP_KEY = "SECURITY_META_SOURCE";
+
     @Autowired
     private ResourceService resourceService;
 
     private RequestMatcher urlMatcher;
 
-    private HashMap<String, Collection<ConfigAttribute>> resourceMap = null;
+    @Autowired
+    @Qualifier("securityRedisTemplate")
+    private RedisTemplate redisTemplate;
 
-
-    public HashMap<String, Collection<ConfigAttribute>> getResourceMap() {
-        return resourceMap;
-    }
 
 
     @PostConstruct
@@ -64,20 +68,20 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
                  * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
 	             * sparta 
 	             */
-        resourceMap = new HashMap<>();
-        Collection<ConfigAttribute> authories = new ArrayList<>();
-        for (OauthResource resource : resources) {
-            if (StringUtils.isNotEmpty(resource.getAuthories())) {
-                authories = StringToCollection(resource.getAuthories());
+        if (CollectionUtils.isNotEmpty(resources)) {
+            HashMap<String, Collection<ConfigAttribute>> resourceMap = new HashMap<>();
+            Collection<ConfigAttribute> authories = new ArrayList<>();
+            for (OauthResource resource : resources) {
+                if (StringUtils.isNotEmpty(resource.getAuthories())) {
+                    authories = StringToCollection(resource.getAuthories());
+                }
+                if (StringUtils.isNotEmpty(resource.getScope())) {
+                    authories.addAll(StringToCollection(resource.getScope()));
+                }
+                resourceMap.put(resource.getResource_url(), authories);
             }
-            if (StringUtils.isNotEmpty(resource.getScope())) {
-                authories.addAll(StringToCollection(resource.getScope()));
-            }
-            resourceMap.put(resource.getResource_url(), authories);
-
+            redisTemplate.opsForHash().putAll(RESOURCE_MAP_KEY, resourceMap);
         }
-
-
     }
 
     /**
@@ -89,7 +93,7 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
     private Collection<ConfigAttribute> StringToCollection(String authories) {
         List<ConfigAttribute> list = new ArrayList<>();
         for (String string : authories.split(",")) {
-            list.add(new SecurityConfig(string));
+            list.add(new MySecurityConfig(string));
         }
         return list;
     }
@@ -115,7 +119,10 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
 //        if(firstQuestionMarkIndex != -1){  
 //            url = url.substring(0,firstQuestionMarkIndex);  
 //        }  
-
+        HashMap<String, Collection<ConfigAttribute>> resourceMap = (HashMap<String, Collection<ConfigAttribute>>) redisTemplate.opsForHash().entries(RESOURCE_MAP_KEY);
+        if (MapUtils.isEmpty(resourceMap)) {
+            loadResourceDefine();
+        }
         Iterator<String> ite = resourceMap.keySet().iterator();
         //取到请求的URL后与上面取出来的资源做比较  
         while (ite.hasNext()) {
@@ -153,7 +160,7 @@ public class CustomerFilterInvocationSecurityMetadataSource implements FilterInv
     }
 
     public void refreshResourceMap(){
-        this.resourceMap=null;
+        this.redisTemplate.delete(RESOURCE_MAP_KEY);
         this.loadResourceDefine();
     }
 

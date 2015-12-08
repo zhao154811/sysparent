@@ -46,6 +46,7 @@
           class="com.enlinkmob.ucenterapi.security.provider.approval.OauthUserApprovalHandler">
         <property name="requestFactory" ref="oAuth2RequestFactory"/>
         <property name="tokenStore" ref="tokenStore"/>
+        <property name="clientDetailsService" ref="clientDetailsService"/>
     </bean>
     <bean id="exactMatchRedirectResolver"
           class="org.springframework.security.oauth2.provider.endpoint.ExactMatchRedirectResolver"></bean>
@@ -67,7 +68,7 @@
         <constructor-arg>
             <list>
                 <bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
-                <bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <bean class="com.enlinkmob.ucenterapi.voter.MyRoleVoter"/>
                 <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
                 <bean:ref bean="urlVoter"/>
             </list>
@@ -162,24 +163,24 @@
         </sec:authentication-provider>
     </sec:authentication-manager>
 
-    <!--<sec:http-->
-    <!--disable-url-rewriting="true" authentication-manager-ref="authenticationManager">-->
-    <!--<sec:intercept-url pattern="/oauth/**" access="authenticated"/>-->
-    <!--<sec:intercept-url pattern="/user/regist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/user/customer/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/cltAPI/cltAPI/cltAPIGet" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/userBehavior/getUserBehavior" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/ucapi/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/uc/**" access="authenticated"/>-->
-    <!--<sec:intercept-url pattern="/ucserver/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:intercept-url pattern="/customerOauth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
-    <!--<sec:form-login authentication-failure-url="/login.jsp?authentication_error=1"-->
-    <!--default-target-url="/index.jsp" login-page="/login.jsp"-->
-    <!--login-processing-url="/login.do"/>-->
-    <!--<sec:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>-->
-    <!--<sec:anonymous/>-->
-    <!--<sec:csrf disabled="true"/>-->
-    <!--</sec:http>-->
+    <sec:http
+            disable-url-rewriting="true" authentication-manager-ref="authenticationManager">
+        <sec:intercept-url pattern="/oauth/**" access="authenticated"/>
+        <sec:intercept-url pattern="/user/regist/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/user/customer/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/cltAPI/cltAPI/cltAPIGet" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/userBehavior/getUserBehavior" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/ucapi/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/uc/**" access="authenticated"/>
+        <sec:intercept-url pattern="/ucserver/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/customerOauth/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:form-login authentication-failure-url="/login.jsp?authentication_error=1"
+                        default-target-url="/index.jsp" login-page="/login.jsp"
+                        login-processing-url="/login.do"/>
+        <sec:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
+        <sec:anonymous/>
+        <sec:csrf disabled="true"/>
+    </sec:http>
 
 
 </beans>

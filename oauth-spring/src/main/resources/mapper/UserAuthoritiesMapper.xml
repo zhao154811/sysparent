@@ -5,6 +5,8 @@
         <id column="auth_id" property="id"/>
         <result column="authority" property="authority"/>
         <result column="auth_name" property="name"/>
+        <result column="authority_type" property="authorityType"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AuthorityTypeHandler"/>
         <result column="auth_create_time" property="createTime"/>
         <result column="auth_modify_time" property="modifyTime"/>
         <result column="auth_status" property="status"
@@ -37,7 +39,7 @@
         SELECT
         a.id,a.user_name,a.phone_num,a.real_name,a.address,a.`status`,a.birthday,a.id_no,a.create_time,a.modify_time,
         a.`password`,a.head_icon,a.salt,a.email,a.locked,a.sex,a.account_status,c.id as auth_id,c.authority,c.`name` as
-        auth_name,
+        auth_name,c.authority_type as authority_type,
         c.create_time as auth_create_time,c.modify_time as auth_modify_time,c.`status` as auth_status
         from user a
         LEFT JOIN user_authorities b
@@ -47,13 +49,16 @@
         where b.status='ENABLE'
         and c.status='ENABLE'
         and a.id=#{userId}
+        <if test="authorityType != null">
+            and c.authority_type=#{authorityType}
+        </if>
     </select>
     <select id="getUserWithAuthoritiesByName" resultType="com.enlinkmob.ucenterapi.model.User"
             resultMap="userResultMap">
         SELECT
         a.id,a.user_name,a.phone_num,a.real_name,a.address,a.`status`,a.birthday,a.id_no,a.create_time,a.modify_time,
         a.`password`,a.head_icon,a.salt,a.email,a.locked,a.sex,a.account_status,c.id as auth_id,c.authority,c.`name` as
-        auth_name,
+        auth_name,c.authority_type as authority_type,
         c.create_time as auth_create_time,c.modify_time as auth_modify_time,c.`status` as auth_status
         from user a
         LEFT JOIN user_authorities b
@@ -63,5 +68,8 @@
         where b.status='ENABLE'
         and c.status='ENABLE'
         and a.user_name=#{userName}
+        <if test="authorityType != null">
+            and c.authority_type=#{authorityType}
+        </if>
     </select>
 </mapper>

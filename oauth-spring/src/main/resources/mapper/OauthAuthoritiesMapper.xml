@@ -3,6 +3,8 @@
 <mapper namespace="com.enlinkmob.ucenterapi.dao.OauthAuthoritiesMapper">
     <resultMap id="authorities" type="com.enlinkmob.ucenterapi.model.OauthAuthorities">
         <id column="id" property="id"/>
+        <result column="authority_type" property="authorityType"
+                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AuthorityTypeHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
@@ -19,8 +21,11 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="authority != null and authority != ''">
+            <if test="authority != null">
                 and authority = #{authority}
+            </if>
+            <if test="authorityType != null ">
+                and authority_type = #{authorityType}
             </if>
             <if test="name != null and name != ''">
                 and name = #{name}
@@ -39,16 +44,20 @@
 
 
     <insert id="addAuthorities">
-        INSERT INTO oauth_authorities (authority,name,status) VALUES (#{authority},#{name},#{status})
+        INSERT INTO oauth_authorities (authority,name,authority_type,status) VALUES
+        (#{authority},#{name},#{authorityType},#{status})
     </insert>
     <update id="updateAuthorities">
         update oauth_authorities
         <trim prefix="SET" suffixOverrides=",">
             <if test="authority != null and authority != ''">
-                authority = #{authority}
+                authority = #{authority},
             </if>
             <if test="name != null and name != ''">
-                name = #{name}
+                name = #{name},
+            </if>
+            <if test="authorityType != null ">
+                authority_type = #{authorityType},
             </if>
             <if test="status != null and status != ''">
                 status = #{status}
@@ -64,5 +73,9 @@
     <select id="queryList" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
         SELECT * FROM oauth_authorities
         <include refid="whereConditions"/>
+    </select>
+    <select id="queryListByEnum" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+        SELECT * FROM oauth_authorities
+        where authority_type = #{authorityType} and status = #{status}
     </select>
 </mapper>

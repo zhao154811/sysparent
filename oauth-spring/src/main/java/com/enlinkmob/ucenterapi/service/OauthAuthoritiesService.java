@@ -1,20 +1,16 @@
-package com.enlinkmob.ucenterapi.dao;
+package com.enlinkmob.ucenterapi.service;
 
 import com.enlinkmob.ucenterapi.Enum.AuthorityType;
 import com.enlinkmob.ucenterapi.Enum.StatusEnum;
 import com.enlinkmob.ucenterapi.model.OauthAuthorities;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/17.
+ * Created by zhaowenyu@ucredit.com on 2015/12/8.
  */
-@Repository(value = "oauthAuthoritiesMapper")
-public interface OauthAuthoritiesMapper {
-
+public interface OauthAuthoritiesService {
     int addAuthorities(OauthAuthorities oauthAuthorities);
 
     int updateAuthorities(OauthAuthorities oauthAuthorities);
@@ -25,5 +21,5 @@ public interface OauthAuthoritiesMapper {
 
     Collection<OauthAuthorities> queryList(Map<String, Object> conditionMap);
 
-    Collection<OauthAuthorities> queryListByEnum(@Param("authorityType") AuthorityType authorityType, @Param("status") StatusEnum status);
+    Collection<OauthAuthorities> queryListByEnum(AuthorityType authorityType, StatusEnum status);
 }
