@@ -16,7 +16,7 @@
 
     <import resource="classpath:applicationcontext-datasource.xml"/>
     <context:annotation-config/>
-    <context:component-scan base-package="com.enlinkmob"/>  <!-- 自动扫描所有注解该路径 -->
+    <context:component-scan base-package="com.wenyu"/>  <!-- 自动扫描所有注解该路径 -->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
             <ref bean="fastJsonHttpMessageConverter"/>
@@ -39,7 +39,7 @@
             <mvc:mapping path="/user/regist/CustomerToken"/>
 
             <mvc:mapping path="/user/customer/*"/>
-            <bean class="com.enlinkmob.ucenterapi.util.ClientRSAInterceptor" scope="singleton"/>
+            <bean class="com.wenyu.oauth.util.ClientRSAInterceptor" scope="singleton"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -54,14 +54,14 @@
                                   ignore-unresolvable="true"/>
 
 
-    <bean id="serverProperties" class="com.enlinkmob.ucenterapi.util.ServerProperties">
+    <bean id="serverProperties" class="com.wenyu.oauth.util.ServerProperties">
         <property name="host" value="${host}"/>
         <property name="headIconLocal" value="${headIconLocal}"/>
 
     </bean>
 
     <bean id="fastJsonHttpMessageConverter"
-          class="com.enlinkmob.ucenterapi.util.MyFastJsonHttpMessageConverter" scope="singleton">
+          class="com.wenyu.oauth.util.MyFastJsonHttpMessageConverter" scope="singleton">
         <property name="supportedMediaTypes">
             <list>
                 <value>application/json;charset=UTF-8</value>
@@ -119,7 +119,7 @@
 
     <!-- 配置dao -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.enlinkmob.ucenterapi.dao"/>
+        <property name="basePackage" value="com.**.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
@@ -180,7 +180,7 @@
 
 
     <!--su权限  client-->
-    <bean id="suclient" class="com.enlinkmob.ucenterapi.model.Client">
+    <bean id="suclient" class="com.wenyu.oauth.model.Client">
         <property name="clientId" value="${manage.clientId}"/>
         <property name="clientKey" value="${manage.clientKey}"/>
         <property name="clientType" value="${manage.clientType}"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthAccessTokenMapper">
-    <resultMap id="accessToken" type="com.enlinkmob.ucenterapi.model.OauthAccessToken">
+<mapper namespace="com.wenyu.oauth.dao.OauthAccessTokenMapper">
+    <resultMap id="accessToken" type="com.wenyu.oauth.model.OauthAccessToken">
         <result column="token_id" property="token_id"/>
         <result column="token" property="token" javaType="java.lang.String" jdbcType="BLOB"/>
         <result column="authentication_id" property="authentication_id"/>
@@ -19,13 +19,13 @@
         DELETE FROM  oauth_access_token where token_id =#{token_id}
     </delete>
     <delete id="deleteOauthAccessTokenByRefreshToken"></delete>
-    <select id="getByAuthenticationId" resultType="com.enlinkmob.ucenterapi.model.OauthAccessToken">
+    <select id="getByAuthenticationId" resultType="com.wenyu.oauth.model.OauthAccessToken">
         SELECT * from oauth_access_token where authentication_id =#{authentication_id}
     </select>
-    <select id="getOauthAccessToken" resultType="com.enlinkmob.ucenterapi.model.OauthAccessToken">
+    <select id="getOauthAccessToken" resultType="com.wenyu.oauth.model.OauthAccessToken">
         SELECT * from oauth_access_token where token_id = #{token_id}
     </select>
-    <select id="getOauthAccessTokens" resultType="com.enlinkmob.ucenterapi.model.OauthAccessToken"></select>
-    <select id="getOauthAccessTokenByUsername" resultType="com.enlinkmob.ucenterapi.model.OauthAccessToken"></select>
-    <select id="findTokensByClientIdAndUserName" resultType="com.enlinkmob.ucenterapi.model.OauthAccessToken"></select>
+    <select id="getOauthAccessTokens" resultType="com.wenyu.oauth.model.OauthAccessToken"></select>
+    <select id="getOauthAccessTokenByUsername" resultType="com.wenyu.oauth.model.OauthAccessToken"></select>
+    <select id="findTokensByClientIdAndUserName" resultType="com.wenyu.oauth.model.OauthAccessToken"></select>
 </mapper>

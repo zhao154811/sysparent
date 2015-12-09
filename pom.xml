@@ -11,6 +11,7 @@
     <modules>
         <module>oauth-spring</module>
         <module>datasource</module>
+        <module>syscommon</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -95,6 +96,16 @@
             <dependency>
                 <groupId>com.wenyu</groupId>
                 <artifactId>datasource</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wenyu</groupId>
+                <artifactId>oauth-spring</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wenyu</groupId>
+                <artifactId>common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <!--test-->

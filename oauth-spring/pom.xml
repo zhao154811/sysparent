@@ -41,6 +41,10 @@
             <artifactId>datasource</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.wenyu</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
@@ -202,6 +206,10 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
         <!--Mybatis-->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -211,10 +219,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
         </dependency>
     </dependencies>
 </project>

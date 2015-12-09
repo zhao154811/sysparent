@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthAuthoritiesMapper">
-    <resultMap id="authorities" type="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+<mapper namespace="com.wenyu.oauth.dao.OauthAuthoritiesMapper">
+    <resultMap id="authorities" type="com.wenyu.oauth.model.OauthAuthorities">
         <id column="id" property="id"/>
         <result column="authority_type" property="authorityType"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AuthorityTypeHandler"/>
+                typeHandler="com.wenyu.typehandler.AuthorityTypeHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
+                typeHandler="com.wenyu.typehandler.StatusEnumHandler"/>
     </resultMap>
     <sql id="column">
         id,authority,name,create_time,modify_time,status
@@ -67,14 +67,14 @@
     <delete id="deleteAuthorities">
         DELETE from oauth_authorities where id=#{id}
     </delete>
-    <select id="getAuthorities" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+    <select id="getAuthorities" resultType="com.wenyu.oauth.model.OauthAuthorities">
         SELECT * FROM oauth_authorities WHERE id =#{id}
     </select>
-    <select id="queryList" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+    <select id="queryList" resultType="com.wenyu.oauth.model.OauthAuthorities">
         SELECT * FROM oauth_authorities
         <include refid="whereConditions"/>
     </select>
-    <select id="queryListByEnum" resultType="com.enlinkmob.ucenterapi.model.OauthAuthorities">
+    <select id="queryListByEnum" resultType="com.wenyu.oauth.model.OauthAuthorities">
         SELECT * FROM oauth_authorities
         where authority_type = #{authorityType} and status = #{status}
     </select>

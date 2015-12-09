@@ -51,7 +51,7 @@
     </filter-mapping>
     <!--<filter>-->
     <!--<filter-name>CROSFilter</filter-name>-->
-    <!--<filter-class>com.enlinkmob.ucenterapi.util.ServletCROSFilter</filter-class>-->
+    <!--<filter-class>ServletCROSFilter</filter-class>-->
     <!--</filter>-->
 
     <!--<filter-mapping>-->
@@ -70,7 +70,7 @@
 
     <!--<filter>-->
     <!--<filter-name>ClientSignFilter</filter-name>-->
-    <!--<filter-class>com.enlinkmob.ucenterapi.util.ClientCheckFilter</filter-class>-->
+    <!--<filter-class>ClientCheckFilter</filter-class>-->
     <!--</filter>-->
 
     <!--<filter-mapping>-->

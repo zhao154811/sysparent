@@ -1,7 +1,7 @@
 package com.enlinkmob.test;
 
 
-import com.enlinkmob.ucenterapi.util.RSA.RSAUtils;
+import com.wenyu.oauth.util.RSA.RSAUtils;
 
 import java.util.Map;
 

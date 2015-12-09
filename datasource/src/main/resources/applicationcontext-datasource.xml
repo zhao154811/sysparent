@@ -27,13 +27,13 @@
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
         <property name="valueSerializer">
-            <bean class="com.enlinkmob.ucenterapi.util.FastJsonRedisSerializer"/>
+            <bean class="com.wenyu.oauth.util.FastJsonRedisSerializer"/>
         </property>
         <property name="hashKeySerializer">
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
         <property name="hashValueSerializer">
-            <bean class="com.enlinkmob.ucenterapi.util.FastJsonRedisSerializer"/>
+            <bean class="com.wenyu.oauth.util.FastJsonRedisSerializer"/>
         </property>
 
     </bean>

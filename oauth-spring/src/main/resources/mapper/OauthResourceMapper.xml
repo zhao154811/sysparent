@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthResourceMapper">
+<mapper namespace="com.wenyu.oauth.dao.OauthResourceMapper">
     <!-- Result Map-->
-    <resultMap id="resultMap" type="com.enlinkmob.ucenterapi.model.OauthResource">
+    <resultMap id="resultMap" type="com.wenyu.oauth.model.OauthResource">
         <id column="id" property="id"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="resource_type" property="resource_type"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.ResourceTypeEnumHandler"/>
+                typeHandler="com.wenyu.typehandler.ResourceTypeEnumHandler"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
+                typeHandler="com.wenyu.typehandler.StatusEnumHandler"/>
     </resultMap>
 
     <insert id="addResource"></insert>
-    <select id="getResources" resultType="com.enlinkmob.ucenterapi.model.OauthResource">
+    <select id="getResources" resultType="com.wenyu.oauth.model.OauthResource">
         SELECT * from oauth_resource WHERE status='ENABLE'
     </select>
 </mapper>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.enlinkmob.ucenterapi.dao.UserMapper">
+<mapper namespace="com.wenyu.oauth.dao.UserMapper">
     <!-- Result Map-->
-    <resultMap id="resultMap" type="com.enlinkmob.ucenterapi.model.User">
+    <resultMap id="resultMap" type="com.wenyu.oauth.model.User">
         <id column="id" property="id"/>
         <result column="user_name" property="userName"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
         <result column="real_name" property="realName"/>
-        <result column="sex" property="sex" typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.SexEnumHandler"/>
+        <result column="sex" property="sex" typeHandler="com.wenyu.typehandler.SexEnumHandler"/>
         <result column="id_no" property="idNo"/>
         <result column="phone_num" property="phoneNum"/>
         <result column="email" property="email"/>
@@ -16,11 +16,11 @@
         <result column="birthday" property="birthday"/>
         <result column="head_icon" property="headIcon"/>
         <result column="account_status" property="accountStatus"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.AccountStatusHandler"/>
+                typeHandler="com.wenyu.typehandler.AccountStatusHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="status" property="status"
-                typeHandler="com.enlinkmob.ucenterapi.dao.typehandler.StatusEnumHandler"/>
+                typeHandler="com.wenyu.typehandler.StatusEnumHandler"/>
     </resultMap>
 
     <sql id="columnList">
@@ -97,7 +97,7 @@
             (#{item.userName},#{item.password},#{item.realName},#{item.sex},#{item.idNo},#{item.phoneNum},#{item.email},#{item.address},#{item.birthday},#{item.headIcon},#{item.userType},#{item.accountStatus},#{item.createTime},#{item.modifyTime},#{item.status});
         </foreach>
     </insert>
-    <update id="update" parameterType="com.enlinkmob.ucenterapi.model.User">
+    <update id="update" parameterType="com.wenyu.oauth.model.User">
         update user set
         user_name=#{userName},password=#{password},salt=#{salt},real_name=#{realName},sex=#{sex},id_no=#{idNo},phone_num=#{phoneNum},email=#{email},address=#{address},birthday=#{birthday},head_icon=#{headIcon},account_status=#{accountStatus},created_time=#{createdTime},modify_time=#{modifyTime},status=#{status}
         where id=#{id}
@@ -117,12 +117,12 @@
     </select>
     <!-- 根据条件查询数量-->
     <select id="selectCountByConditions" resultType="java.lang.Integer"
-            parameterType="com.enlinkmob.ucenterapi.model.User">
+            parameterType="com.wenyu.oauth.model.User">
         select count(1) from user
         <include refid="whereConditions"/>
     </select>
     <!-- 根据条件查询 -->
-    <select id="selectByConditions" resultMap="resultMap" parameterType="com.enlinkmob.ucenterapi.model.User">
+    <select id="selectByConditions" resultMap="resultMap" parameterType="com.wenyu.oauth.model.User">
         select
         <include refid="columnList"/>
         from user
@@ -142,7 +142,7 @@
         from user
         <include refid="whereConditions"/>
     </select>
-    <select id="selectByName" resultType="com.enlinkmob.ucenterapi.model.User" parameterType="string">
+    <select id="selectByName" resultType="com.wenyu.oauth.model.User" parameterType="string">
         select
         <include refid="columnList"/>
         from user WHERE user_name = #{name} and status = 'ENABLE'

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.enlinkmob.ucenterapi.dao.OauthRefreshTokenMapper">
-    <resultMap id="refreshToken" type="com.enlinkmob.ucenterapi.model.OauthRefreshToken">
+<mapper namespace="com.wenyu.oauth.dao.OauthRefreshTokenMapper">
+    <resultMap id="refreshToken" type="com.wenyu.oauth.model.OauthRefreshToken">
         <result column="token_id" property="token_id"/>
         <result column="token" property="token" javaType="byte[]" jdbcType="BLOB"/>
         <result column="authentication" property="authentication" jdbcType="BLOB" javaType="byte[]"/>
@@ -12,5 +12,5 @@
     <delete id="deleteRefreshTokenByTokenId">
         DELETE FROM oauth_refresh_token where token_id =#{token_id}
     </delete>
-    <select id="getRefreshTokenByTokenId" resultType="com.enlinkmob.ucenterapi.model.OauthRefreshToken"></select>
+    <select id="getRefreshTokenByTokenId" resultType="com.wenyu.oauth.model.OauthRefreshToken"></select>
 </mapper>

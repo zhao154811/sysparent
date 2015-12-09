@@ -1,6 +1,7 @@
 package com.enlinkmob.test;
 
-import com.enlinkmob.ucenterapi.Enum.SexEnum;
+
+import com.wenyu.Enum.SexEnum;
 
 /**
  * Created by zhaowenyu@ucredit.com on 2015/12/4.

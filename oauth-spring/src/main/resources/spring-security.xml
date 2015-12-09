@@ -9,9 +9,9 @@
 
 
     <bean id="tokenStore"
-          class="com.enlinkmob.ucenterapi.security.provider.MongoTokenStore">
+          class="com.wenyu.oauth.security.provider.MongoTokenStore">
     </bean>
-    <bean id="tokenServices" class="com.enlinkmob.ucenterapi.security.provider.MyTokenService">
+    <bean id="tokenServices" class="com.wenyu.oauth.security.provider.MyTokenService">
         <!--class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"-->
         <property name="tokenStore" ref="tokenStore"/>
         <property name="clientDetailsService" ref="clientDetailsService"/>
@@ -19,7 +19,7 @@
     </bean>
 
     <bean id="clientDetailsService"
-          class="com.enlinkmob.ucenterapi.security.provider.MongoClientDetailService">
+          class="com.wenyu.oauth.security.provider.MongoClientDetailService">
     </bean>
     <bean id="oauth2ClientDetailsUserService"
           class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
@@ -43,7 +43,7 @@
     </bean>
 
     <bean id="oauthUserApprovalHandler"
-          class="com.enlinkmob.ucenterapi.security.provider.approval.OauthUserApprovalHandler">
+          class="com.wenyu.oauth.security.provider.approval.OauthUserApprovalHandler">
         <property name="requestFactory" ref="oAuth2RequestFactory"/>
         <property name="tokenStore" ref="tokenStore"/>
         <property name="clientDetailsService" ref="clientDetailsService"/>
@@ -68,7 +68,7 @@
         <constructor-arg>
             <list>
                 <bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
-                <bean class="com.enlinkmob.ucenterapi.voter.MyRoleVoter"/>
+                <bean class="com.wenyu.oauth.voter.MyRoleVoter"/>
                 <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
                 <bean:ref bean="urlVoter"/>
             </list>
