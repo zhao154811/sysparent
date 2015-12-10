@@ -11,7 +11,11 @@ import com.wenyu.oauth.exception.DataNotFoundException;
 import com.wenyu.oauth.exception.ParamException;
 import com.wenyu.oauth.exception.ResponseException;
 import com.wenyu.oauth.image.ImageCut;
-import com.wenyu.oauth.model.*;
+import com.wenyu.oauth.model.Authority;
+import com.wenyu.oauth.model.CustomerUserInfo;
+import com.wenyu.oauth.model.OAuthClientDetails;
+import com.wenyu.oauth.model.OauthAuthorities;
+import com.wenyu.oauth.model.User;
 import com.wenyu.oauth.service.CustomerUserService;
 import com.wenyu.oauth.service.NewUserService;
 import com.wenyu.oauth.service.RoleService;
@@ -36,7 +40,13 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Zhaowy on 2015/2/2.

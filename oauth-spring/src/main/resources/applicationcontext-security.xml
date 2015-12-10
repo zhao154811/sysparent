@@ -187,7 +187,6 @@
     </bean>
     <util:map id="imageCutImpl">
         <entry key="localStore" value-ref="localStore"/>
-
     </util:map>
 
 </beans>

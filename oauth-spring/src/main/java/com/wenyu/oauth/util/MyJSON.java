@@ -8,7 +8,17 @@
 package com.wenyu.oauth.util;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.*;
+import com.alibaba.fastjson.serializer.AfterFilter;
+import com.alibaba.fastjson.serializer.BeforeFilter;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.NameFilter;
+import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.PropertyPreFilter;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.alibaba.fastjson.serializer.SerializeWriter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 
 /**
  * @author Zhaowy

@@ -12,6 +12,7 @@
         <module>oauth-spring</module>
         <module>datasource</module>
         <module>syscommon</module>
+        <module>immodule</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -107,6 +108,12 @@
                 <groupId>com.wenyu</groupId>
                 <artifactId>common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <!--mina-->
+            <dependency>
+                <groupId>org.apache.mina</groupId>
+                <artifactId>mina-core</artifactId>
+                <version>3.0.0-M2</version>
             </dependency>
             <!--test-->
             <dependency>
