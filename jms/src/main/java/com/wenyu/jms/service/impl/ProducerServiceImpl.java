@@ -18,7 +18,6 @@ import javax.jms.Session;
 public class ProducerServiceImpl implements ProducerService {
     @Autowired
     private JmsTemplate jmsTemplate;
-
     @Override
     public void sendMessage(Destination destination, final String message) {
         System.out.println("---------------生产者发送消息-----------------");

@@ -9,9 +9,12 @@
     <bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="${mq.url}"/>
     </bean>
-
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+        <property name="connectionFactory" ref="mqConnectionFactory"/>
+        <property name="maxConnections" value="${mq.maxcon}"/>
+    </bean>
     <bean id="jmsConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
-        <property name="targetConnectionFactory" ref="mqConnectionFactory"/>
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>
     </bean>
 
     <!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->

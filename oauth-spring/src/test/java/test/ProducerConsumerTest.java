@@ -1,5 +1,4 @@
 package test;
-
 import com.wenyu.jms.service.ProducerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
