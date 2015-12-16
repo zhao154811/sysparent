@@ -42,6 +42,10 @@
         </dependency>
         <dependency>
             <groupId>com.wenyu</groupId>
+            <artifactId>jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wenyu</groupId>
             <artifactId>common</artifactId>
         </dependency>
         <dependency>
@@ -127,6 +131,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -224,5 +229,6 @@
             <groupId>org.sitemesh</groupId>
             <artifactId>sitemesh</artifactId>
         </dependency>
+
     </dependencies>
 </project>
