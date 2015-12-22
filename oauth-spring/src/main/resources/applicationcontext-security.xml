@@ -118,16 +118,17 @@
         <property name="basePackage" value="com.**.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
-
+    <bean id="userTransactionService"
+          class="com.atomikos.icatch.config.UserTransactionServiceImp"
+          init-method="init" destroy-method="shutdownForce"/>
     <!-- atomikos事务管理器 -->
     <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
-          init-method="init" destroy-method="close">
-        <property name="forceShutdown">
-            <value>true</value>
-        </property>
+          init-method="init" destroy-method="close" depends-on="userTransactionService">
+        <property name="forceShutdown" value="false"/>
     </bean>
 
-    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp"
+          depends-on="userTransactionService">
         <property name="transactionTimeout" value="300"/>
     </bean>
 
@@ -184,6 +185,23 @@
     <util:map id="imageCutImpl">
         <entry key="localStore" value-ref="localStore"/>
     </util:map>
+
+    <!--队列目的地-->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="queue,user"/>
+    </bean>
+
+    <!-- 消息监听器 -->
+    <bean id="consumerMessageListener" class="com.wenyu.jms.listener.MyMessageLisener"/>
+    <!-- 消息监听容器 -->
+    <bean id="jmsContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="atomikosConnectionFactory"/>
+        <property name="destination" ref="queueDestination"/>
+        <property name="messageListener" ref="consumerMessageListener"/>
+        <property name="transactionManager" ref="jtaTransactionManager"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
 
 </beans>
 

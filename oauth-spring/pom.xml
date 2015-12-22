@@ -69,6 +69,10 @@
             <artifactId>transactions-jta</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jms</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
         </dependency>
