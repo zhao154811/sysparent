@@ -7,7 +7,7 @@
 %>
 
 
-<html>
+<html ng-app>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="./js/jquery-2.1.4.min.js"></script>
+<!-- angular。-->
+<script src="./js/angular.min.js"></script>
+
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <body>

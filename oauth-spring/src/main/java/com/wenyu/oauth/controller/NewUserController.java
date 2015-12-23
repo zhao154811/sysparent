@@ -13,7 +13,6 @@ import com.wenyu.oauth.util.MySimplePropertyPreFilter;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,11 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
-@Scope(value = "singleton")
-@RequestMapping("uc")
+@RequestMapping("uc/gateway")
 public class NewUserController {
 
 
@@ -122,6 +122,13 @@ public class NewUserController {
         return o;
     }
 
+
+    @RequestMapping(params = "method=userRegist")
+    public
+    @ResponseBody
+    ResultMessage userRegist(User user, String client_id, String birth) throws UnsupportedEncodingException, ParseException {
+        return newUserService.userRegist(user, client_id, birth);
+    }
 
     /**
      * 获取用户资料
