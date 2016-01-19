@@ -130,6 +130,11 @@ public class NewUserController {
         return newUserService.userRegist(user, client_id, birth);
     }
 
+
+    @RequestMapping(params = "method=index")
+    public String index(User user, String client_id, String birth) throws UnsupportedEncodingException, ParseException {
+        return "index";
+    }
     /**
      * 获取用户资料
      * 根据access_token获取用户名从而获取用户资料

@@ -14,8 +14,9 @@
           class="com.atomikos.jms.AtomikosConnectionFactoryBean" init-method="init" destroy-method="close">
         <property name="uniqueResourceName" value="amq1"/>
         <property name="xaConnectionFactory" ref="mqXaConnectionFactory"/>
-        <property name="maxPoolSize" value="40"/>
+        <property name="maxPoolSize" value="10"/>
     </bean>
+
 
     <!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">

@@ -428,11 +428,16 @@
             <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-core</artifactId>
-                <version>5.13.0</version>
+                <version>5.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-pool</artifactId>
+                <version>5.13.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-spring</artifactId>
                 <version>5.13.0</version>
             </dependency>
             <dependency>
@@ -450,7 +455,19 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>3.12</version>
             </dependency>
+            <!-- spring session-->
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session</artifactId>
+                <version>1.0.2.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>1.0.2.RELEASE</version>
+            </dependency>
 
+            <!-- spring session-->
         </dependencies>
 
     </dependencyManagement>

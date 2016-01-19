@@ -92,7 +92,11 @@ public class MyFastJsonHttpMessageConverter extends FastJsonHttpMessageConverter
         } else if (obj instanceof DefaultWebResponseExceptionTranslator) {
             text = obj.toString();
         } else {
-            text = MyJSON.toJSONString(obj, this.getFeatures());
+            try {
+                text = MyJSON.toJSONString(obj, this.getFeatures());
+            } catch (Exception e) {
+                text = obj.toString();
+            }
         }
 //		else if (jem != null) {
 //			text = MyJSON.toJSONString(jem, this.getFeatures());

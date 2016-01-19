@@ -130,9 +130,11 @@
     </sec:http>
      -->
     <!--user http configuration -->
+    <sec:http pattern="/uc/gateway" security="none"/>
     <sec:http pattern="/uc/**" create-session="never" use-expressions="false"
               entry-point-ref="oauth2AuthenticationEntryPoint"
               access-decision-manager-ref="oauth2AccessDecisionManager"><!--   oauth2AccessDecisionManager 加入将验证全部  access -->
+
         <sec:csrf disabled="true"/>
         <sec:anonymous enabled="false"/>
         <!--  <sec:custom-filter ref="servletRSAFilter" before="FIRST" />-->
