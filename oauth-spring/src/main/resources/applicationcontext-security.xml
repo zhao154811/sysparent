@@ -6,13 +6,15 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+   	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+   	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <import resource="classpath:applicationcontext-datasource.xml"/>
     <import resource="classpath:applicationcontext-jms.xml"/>
@@ -213,6 +215,18 @@
     <bean name="springSession" class="org.springframework.session.web.http.SessionRepositoryFilter">
         <constructor-arg ref="redisOperationsSessionRepository"></constructor-arg>
     </bean>
+
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="provider"/>
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"/>
+    <!--监控中心地址 -->
+    <!--<dubbo:monitor address="dubbo://127.0.0.1:5050/com.alibaba.dubbo.monitor.MonitorService" />-->
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.wenyu.oauth.service.NewUserService" ref="newUserService"/>
 </beans>
 
 
