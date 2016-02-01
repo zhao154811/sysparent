@@ -10,7 +10,8 @@
     <!-- consumer application name -->
     <dubbo:application name="consumer-of-user-app"/>
     <!-- registry address, used for consumer to discover services -->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183" username="admin"
+                    password="test"/>
     <dubbo:consumer timeout="5000"/>
     <!-- which service to consumer -->
     <dubbo:reference id="dubboUserService"
