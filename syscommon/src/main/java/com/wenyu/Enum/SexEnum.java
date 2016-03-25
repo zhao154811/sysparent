@@ -1,7 +1,6 @@
 package com.wenyu.Enum;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/4.
  */
 
 public enum SexEnum {
