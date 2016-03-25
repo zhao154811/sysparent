@@ -1,7 +1,6 @@
 package com.wenyu.Enum;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/11.
  */
 public enum OauthResourceEnum {
     ACTION("ACTION", "控制器"), STATIC("STATIC", "静态资源"), TXT("TXT", "文本");
