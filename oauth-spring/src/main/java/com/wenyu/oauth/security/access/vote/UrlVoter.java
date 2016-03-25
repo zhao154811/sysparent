@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/4.
  */
 @Component("urlVoter")
 public class UrlVoter implements AccessDecisionVoter<Object> {
