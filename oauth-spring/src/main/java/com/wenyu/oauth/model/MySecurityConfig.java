@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/8.
  */
 public class MySecurityConfig implements ConfigAttribute {
 
