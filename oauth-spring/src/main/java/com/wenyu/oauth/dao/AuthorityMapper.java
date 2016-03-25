@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/9.
  */
 @Repository(value = "authorityMapper")
 public interface AuthorityMapper {
