@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/17.
  */
 @Repository(value = "oauthAuthoritiesMapper")
 public interface OauthAuthoritiesMapper {
