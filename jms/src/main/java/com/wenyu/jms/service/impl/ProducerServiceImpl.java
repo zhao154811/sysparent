@@ -12,7 +12,6 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/16.
  */
 @Service("producerServiceImpl")
 public class ProducerServiceImpl implements ProducerService {
