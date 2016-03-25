@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/10.
  */
 public class AccountStatusHandler extends BaseTypeHandler<AccountStatus> {
     private Class<AccountStatus> type;
