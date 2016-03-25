@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/19.
  */
 @Repository("userAuthoritiesMapper")
 public interface UserAuthoritiesMapper {
