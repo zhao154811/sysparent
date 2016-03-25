@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/8.
  */
 public interface OauthAuthoritiesService {
     int addAuthorities(OauthAuthorities oauthAuthorities);
