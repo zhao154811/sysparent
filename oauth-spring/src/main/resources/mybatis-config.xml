@@ -17,14 +17,14 @@
         <setting name="defaultStatementTimeout" value="25000"/>
     </settings>
     <!--<typeAliases>-->
-    <!--<typeAlias alias="User" type="com.ucredit.model.User" />-->
-    <!--<typeAlias alias="WxUserBindInfo" type="com.ucredit.model.loan.WxUserBindInfo" />-->
-    <!--<typeAlias alias="Apply" type="com.ucredit.model.apply.Apply" />-->
-    <!--<typeAlias alias="Attachment" type="com.ucredit.model.Attachment" />-->
-    <!--<typeAlias alias="Store" type="com.ucredit.model.Store" />-->
-    <!--<typeAlias alias="WxMessage" type="com.ucredit.model.weixin.WxMessage" />-->
-    <!--<typeAlias alias="WxMenu" type="com.ucredit.model.weixin.WxMenu" />-->
-    <!--<typeAlias alias="WxUserLoanApplyInfo" type="com.ucredit.model.loan.WxUserLoanApplyInfo" />-->
+    <!--<typeAlias alias="User" type="com.model.User" />-->
+    <!--<typeAlias alias="WxUserBindInfo" type="com.model.loan.WxUserBindInfo" />-->
+    <!--<typeAlias alias="Apply" type="com.model.apply.Apply" />-->
+    <!--<typeAlias alias="Attachment" type="com.model.Attachment" />-->
+    <!--<typeAlias alias="Store" type="com.model.Store" />-->
+    <!--<typeAlias alias="WxMessage" type="com.model.weixin.WxMessage" />-->
+    <!--<typeAlias alias="WxMenu" type="com.model.weixin.WxMenu" />-->
+    <!--<typeAlias alias="WxUserLoanApplyInfo" type="com.model.loan.WxUserLoanApplyInfo" />-->
     <!--</typeAliases>-->
     <!--分页-->
     <plugins>
