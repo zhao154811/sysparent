@@ -1,7 +1,6 @@
 package com.wenyu.Enum;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/10.
  */
 public enum AccountStatus {
     LOKCED("LOKCED", "已锁定"),
