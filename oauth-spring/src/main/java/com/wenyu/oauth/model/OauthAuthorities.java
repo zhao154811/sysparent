@@ -5,7 +5,6 @@ import com.wenyu.Enum.AuthorityType;
 import com.wenyu.model.BaseLongEntity;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/11/17.
  */
 public class OauthAuthorities extends BaseLongEntity {
     private static final long serialVersionUID = 1701744816001262805L;
