@@ -6,7 +6,6 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/16.
  */
 public class MyMessageLisener implements MessageListener {
     @Override
