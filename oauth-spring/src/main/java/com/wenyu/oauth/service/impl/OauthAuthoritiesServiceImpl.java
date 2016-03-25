@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/8.
  */
 @Service("oauthAuthoritiesService")
 public class OauthAuthoritiesServiceImpl implements OauthAuthoritiesService {
