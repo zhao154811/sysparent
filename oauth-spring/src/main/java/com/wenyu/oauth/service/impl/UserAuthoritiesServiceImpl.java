@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/8.
  */
 @Service("userAuthoritiesService")
 public class UserAuthoritiesServiceImpl implements UserAuthoritiesService {
