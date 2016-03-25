@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zhaowenyu@ucredit.com on 2015/12/24.
  */
 public class IndexOutPut {
     @Test
